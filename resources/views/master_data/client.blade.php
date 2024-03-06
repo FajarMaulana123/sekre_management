@@ -25,6 +25,7 @@
                             <th>E-mail</th>
                             <th>No Hp</th>
                             <th>Alamat</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -110,6 +111,53 @@
 </div>
 
 
+<div class="modal fade" id="status_" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title judul-status" id="status_"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"  aria-label="Close">
+                </button>
+            </div>
+            <form id="status-form" method="POST" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                        <input type="hidden" name="hidden_id" id="hidden_id_status">
+                                        <div class="row">
+                                            <div class="col-md-12 mb-2">
+                                                <div class="form-group">
+                                                    <label for="">Status</label>
+                                                    <select name="status" id="status" class="form-control form-control-sm">
+                                                        <option value="PROSPEK">Prospek</option>
+                                                        <option value="FOLLOWUP">Follow Up</option>
+                                                        <option value="OFFERING">Offering</option>
+                                                        <option value="INVOICE">Invoice</option>
+                                                        <option value="DEALING">Dealing</option>
+                                                        <option value="DONE">Done</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>       
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="javascript:;" class="btn btn-white" data-bs-dismiss="modal">Close</a>
+                        <button type="reset" class="btn btn-dark">Reset</button>
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 
 @endsection
 
@@ -147,6 +195,7 @@
                 {data: 'email', name: 'email'},
                 {data: 'no_hp', name: 'no_hp'},
                 {data: 'alamat', name: 'alamat'},
+                {data: 'status', name: 'status'},
                 {
                     data: 'action', 
                     name: 'action', 
@@ -192,6 +241,14 @@
             $('#alamat').val($(this).data('alamat'));
         });
 
+        $(document).on('click', '.status', function() {
+            $('#status-form')[0].reset();
+            $('#status_').modal('show');
+            $('#btn-sb').text('Update');
+            $('.judul-status').text('Update Status');
+            $('#hidden_id_status').val($(this).data('id'));
+            $('#status').val($(this).data('status'));
+        });
        
         $(document).on('click', '.delete', function() {
             var id = $(this).data('id');
@@ -307,6 +364,55 @@
                         alert('Error adding / update data');
                     }
                 });
+            }
+        });
+
+        $("#status-form").validate({
+            errorClass: "is-invalid",
+            // validClass: "is-valid",
+            rules: {
+               
+            },
+            submitHandler: function(form) {
+                var datas = new FormData(document.getElementById("status-form"));
+                // console.log(datas);
+                Swal.fire({
+                    title: 'Apakah Anda Yakin?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'Ya, Update!',
+                    cancelButtonText: 'Tidak',
+                }).then((result) => {
+                    // console.log(datas);
+                    if (result.value) {
+                        $.ajax({
+                            url: '/update_status_client',
+                            type: "POST",
+                            data: datas,
+                            dataType: "JSON",
+                            contentType: false,
+                            cache: false,
+                            processData: false,
+                            success: function(data) {
+                                $('#status_').modal('hide');
+                                table.ajax.reload();
+                                Swal.fire({
+                                    title: data.title,
+                                    text:  data.status,
+                                    icon: data.icon,
+                                    timer: 3000,
+                                    showCancelButton: false,
+                                    showConfirmButton: false,
+                                    buttons: false,
+                                });
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                alert('Error');
+                            }
+                        });
+                    }
+                }) 
             }
         });
   });

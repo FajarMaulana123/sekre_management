@@ -31,6 +31,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/create_client', [AdminController::class, 'create_client'])->middleware('cek_login');
     Route::post('/update_client', [AdminController::class, 'update_client'])->middleware('cek_login');
     Route::post('/delete_client', [AdminController::class, 'delete_client'])->middleware('cek_login');
+    Route::post('/update_status_client', [AdminController::class, 'update_status_client'])->middleware('cek_login');
 
     Route::get('/perusahaan', [AdminController::class, 'perusahaan'])->middleware('cek_login');
     Route::post('/perusahaan_', [AdminController::class, 'perusahaan_'])->middleware('cek_login');

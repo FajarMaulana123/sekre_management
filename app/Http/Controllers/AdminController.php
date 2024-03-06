@@ -216,12 +216,39 @@ class AdminController extends Controller
                     </div>';
                     return $actionBtn;
                 })
+                ->addColumn('status', function ($field) {
+                    if ($field->status == 'PROSPEK') {
+                        $status = 'Prospek';
+                        $class = 'btn btn-xs waves-effect waves-light btn-outline-info';
+                    } else if ($field->status == 'FOLLOWUP') {
+                        $status = 'Follow Up';
+                        $class = 'btn btn-xs waves-effect waves-light btn-outline-primary';
+                    } else if ($field->status == 'OFFERING') {
+                        $status = 'Offering';
+                        $class = 'btn btn-xs waves-effect waves-light btn-outline-warning';
+                    } else if ($field->status == 'INVOICE') {
+                        $status = 'Invoice';
+                        $class = 'btn btn-xs waves-effect waves-light btn-outline-info';
+                    } else if ($field->status == 'DEALING') {
+                        $status = 'Dealing';
+                        $class = 'btn btn-xs waves-effect waves-light btn-outline-success';
+                    } else if ($field->status == 'DONE') {
+                        $status = 'Done';
+                        $class = 'btn btn-xs waves-effect waves-light btn-outline-primary';
+                    } else {
+                        $status = 'UNDEFINED';
+                        $class = 'btn btn-xs waves-effect waves-light btn-outline-danger';
+                    }
+
+                    $st = '<a href="javascript:void(0);" class="' . $class . ' status" data-id="' . $field->id . '" data-status="' . $field->status . '">' . $status . '</a>';
+                    return $st;
+                })
                 // ->addColumn('image', function ($field) {
                 //     $img = ($field->image != null) ? asset($field->image) : asset('/uploads/noimage.jpg');
                 //     $cover = '<img src="' . $img . '" width="50" alt="" class="rounded" />';
                 //     return $cover;
                 // })
-                ->rawColumns(['action'])
+                ->rawColumns(['action', 'status'])
                 ->addIndexColumn()
                 ->make(true);
         }
@@ -307,6 +334,26 @@ class AdminController extends Controller
             'deleted' => 1,
         ]);
         if ($data) {
+            $r['title'] = 'Sukses!';
+            $r['icon'] = 'success';
+            $r['status'] = 'Berhasil di Hapus!';
+        } else {
+            $r['title'] = 'Maaf!';
+            $r['icon'] = 'error';
+            $r['status'] = '<br><b>Tidak dapat di Hapus! <br> Silakan hubungi Administrator.</b>';
+        }
+        return response()->json($r);
+    }
+
+    public function update_status_client(Request $request)
+    {
+        hasModule('CLIENT');
+        // dd($request);
+        $data['status'] = $request->status;
+        $data['edited_date'] = date('Y-m-d');
+        $data['edited_by'] = auth()->user()->id;
+        $datas = DB::table('client')->where('id', $request->hidden_id)->update($data);
+        if ($datas) {
             $r['title'] = 'Sukses!';
             $r['icon'] = 'success';
             $r['status'] = 'Berhasil di Hapus!';
