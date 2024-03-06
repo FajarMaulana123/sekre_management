@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\KeuanganController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -51,4 +52,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/create_project', [AdminController::class, 'create_project'])->middleware('cek_login');
     Route::post('/update_project', [AdminController::class, 'update_project'])->middleware('cek_login');
     Route::post('/delete_project', [AdminController::class, 'delete_project'])->middleware('cek_login');
+
+    Route::get('/transaksi', [KeuanganController::class, 'transaksi'])->middleware('cek_login');
+    Route::post('/transaksi_', [KeuanganController::class, 'transaksi_'])->middleware('cek_login');
+    Route::post('/create_transaksi', [KeuanganController::class, 'create_transaksi'])->middleware('cek_login');
+    Route::post('/update_transaksi', [KeuanganController::class, 'update_transaksi'])->middleware('cek_login');
 });

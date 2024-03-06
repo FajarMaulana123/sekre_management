@@ -25,7 +25,7 @@
                 </a>
             </div>
                 <?php if( isLoggedIn()) : ?>
-                    <?php if (forModule('DASHBOARD') || forModule('PERUSAHAAN') || forModule('CLIENT') || forModule('JENIS_PROJECT') || forModule('PROJECT') || forModule('USER_MANAGEMENT')) : ?>
+                    <?php if (forModule('DASHBOARD') || forModule('PERUSAHAAN') || forModule('CLIENT') || forModule('JENIS_PROJECT') || forModule('PROJECT') || forModule('TRANSAKSI') || forModule('USER_MANAGEMENT')) : ?>
                     
                         <div class="menu-header">Navigation</div>
                         <?php if (forModuleGroup('DASHBOARD')) : ?>
@@ -92,6 +92,20 @@
                                     <i class="fas fa-list fa-fw"></i>
                                     </div>
                                     <div class="menu-text">Jenis Project</div>
+                                </a>
+                            </div>
+                            <?php endif; ?>
+                        <?php endif; ?>
+
+                        <?php if (forModuleGroup('KEUANGAN')) : ?>
+                        <div class="menu-header">Keuangan</div>
+                            <?php if (forModule('TRANSAKSI')) : ?>
+                            <div class="menu-item <?php echo (Session::get('module') == $data['role'] ? 'active' : '') ?>">
+                                <a href="/transaksi" class="menu-link">
+                                    <div class="menu-icon">
+                                    <i class="fas fa-building-user fa-fw"></i>
+                                    </div>
+                                    <div class="menu-text">Transaksi</div>
                                 </a>
                             </div>
                             <?php endif; ?>
