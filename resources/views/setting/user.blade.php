@@ -179,7 +179,7 @@
             processing: true,
             serverSide: true,
             ajax: {
-                url: '/usermanagemant_',
+                url: '/adm/usermanagemant_',
                 method: 'POST',
             },
             columns: [
@@ -259,7 +259,7 @@
             $("#role").val($(this).data('role'));
             $("#hidden_status").val("edit");
             $.ajax({
-                url: '/get_modul',
+                url: '/adm/get_modul',
                 type: "POST",
                 data: {
                     'id': $(this).data('id'),
@@ -334,9 +334,9 @@
             submitHandler: function(form) {
                 let url;
                 if ($('#hidden_status').val() == 'add') {
-                    url = '/create_usermanagement';
+                    url = '/adm/create_usermanagement';
                 } else {
-                    url = '/update_usermanagement';
+                    url = '/adm/update_usermanagement';
                 }
                 $.ajax({
                     url: url,
@@ -390,7 +390,7 @@
             }).then((result) => {
                 if (result.value) {
                     $.ajax({
-                        url: "/delete_user",
+                        url: "/adm/delete_user",
                         type: "POST",
                         data: {
                             id: id
@@ -428,7 +428,7 @@
             }).then((result) => {
                 if (result.value) {
                     $.ajax({
-                        url: "/locked_user",
+                        url: "/adm/locked_user",
                         type: "POST",
                         data: {
                             id: id

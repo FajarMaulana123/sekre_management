@@ -25,7 +25,8 @@
                 </a>
             </div>
                 <?php if( isLoggedIn()) : ?>
-                    <?php if (forModule('DASHBOARD') || forModule('PERUSAHAAN') || forModule('CLIENT') || forModule('JENIS_PROJECT') || forModule('PROJECT') || forModule('TRANSAKSI') || forModule('USER_MANAGEMENT')) : ?>
+                    <?php if (forModule('DASHBOARD') || forModule('PERUSAHAAN') || forModule('CLIENT') || forModule('JENIS_PROJECT') || forModule('PROJECT') || forModule('TRANSAKSI') 
+                    || forModule('PROFILE') || forModule('USER_MANAGEMENT')) : ?>
                     
                         <div class="menu-header">Navigation</div>
                         <?php if (forModuleGroup('DASHBOARD')) : ?>
@@ -42,7 +43,7 @@
                                     
                                         <?php if (forModule('DASHBOARD')) : ?>
                                         <div class="menu-item <?php echo (Session::get('module') == $data['role'] ? 'active' : '') ?>">
-                                            <a href="/dashboard" class="menu-link ">
+                                            <a href="/adm/dashboard" class="menu-link ">
                                                 <div class="menu-text">Dashboard</div>
                                             </a>
                                         </div>
@@ -57,7 +58,7 @@
                             <div class="menu-header">Master Data</div>
                             <?php if (forModule('CLIENT')) : ?>
                             <div class="menu-item <?php echo (Session::get('module') == $data['role'] ? 'active' : '') ?>">
-                                <a href="/client" class="menu-link">
+                                <a href="/adm/client" class="menu-link">
                                     <div class="menu-icon">
                                     <i class="fas fa-building-user fa-fw"></i>
                                     </div>
@@ -67,7 +68,7 @@
                             <?php endif; ?>
                             <?php if (forModule('PERUSAHAAN')) : ?>
                             <div class="menu-item <?php echo (Session::get('module') == $data['role'] ? 'active' : '') ?>">
-                                <a href="/perusahaan" class="menu-link">
+                                <a href="/adm/perusahaan" class="menu-link">
                                     <div class="menu-icon">
                                     <i class="fas fa-building fa-fw"></i>
                                     </div>
@@ -77,7 +78,7 @@
                             <?php endif; ?>
                             <?php if (forModule('PROJECT')) : ?>
                             <div class="menu-item <?php echo (Session::get('module') == $data['role'] ? 'active' : '') ?>">
-                                <a href="/project" class="menu-link">
+                                <a href="/adm/project" class="menu-link">
                                     <div class="menu-icon">
                                     <i class="fas fa-file-shield fa-fw"></i>
                                     </div>
@@ -87,7 +88,7 @@
                             <?php endif; ?>
                             <?php if (forModule('JENIS_PROJECT')) : ?>
                             <div class="menu-item <?php echo (Session::get('module') == $data['role'] ? 'active' : '') ?>">
-                                <a href="/jenis_project" class="menu-link">
+                                <a href="/adm/jenis_project" class="menu-link">
                                     <div class="menu-icon">
                                     <i class="fas fa-list fa-fw"></i>
                                     </div>
@@ -101,11 +102,25 @@
                         <div class="menu-header">Keuangan</div>
                             <?php if (forModule('TRANSAKSI')) : ?>
                             <div class="menu-item <?php echo (Session::get('module') == $data['role'] ? 'active' : '') ?>">
-                                <a href="/transaksi" class="menu-link">
+                                <a href="/adm/transaksi" class="menu-link">
                                     <div class="menu-icon">
-                                    <i class="fas fa-building-user fa-fw"></i>
+                                    <i class="fas fa-handshake fa-fw"></i>
                                     </div>
                                     <div class="menu-text">Transaksi</div>
+                                </a>
+                            </div>
+                            <?php endif; ?>
+                        <?php endif; ?>
+
+                        <?php if (forModuleGroup('CMS')) : ?>
+                        <div class="menu-header">CMS</div>
+                            <?php if (forModule('PROFILE')) : ?>
+                            <div class="menu-item <?php echo (Session::get('module') == $data['role'] ? 'active' : '') ?>">
+                                <a href="/adm/profile" class="menu-link">
+                                    <div class="menu-icon">
+                                    <i class="fas fa-book fa-fw"></i>
+                                    </div>
+                                    <div class="menu-text">Profile</div>
                                 </a>
                             </div>
                             <?php endif; ?>
@@ -115,7 +130,7 @@
                             <div class="menu-header">Settings</div>
                             <?php if (forModule('USER_MANAGEMENT')) : ?>
                             <div class="menu-item <?php echo (Session::get('module') == $data['role'] ? 'active' : '') ?>">
-                                <a href="/user" class="menu-link">
+                                <a href="/adm/user" class="menu-link">
                                     <div class="menu-icon">
                                     <i class="fas fa-user-group fa-fw"></i>
                                     </div>

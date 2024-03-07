@@ -1,5 +1,5 @@
 <div class="navbar-header">
-    <a href="/" class="navbar-brand"><img src="{{asset((Session::get('logo') == null) ? '/no-logo.png' : Session::get('logo'))}}"  style="margin-right:10px;"  alt=""></a>
+    <a href="/" class="navbar-brand"><img src="{{($profile->logo != null) ? asset($profile->logo) : ''}}"  style="margin-right:10px;"  alt=""></a>
     <button type="button" class="navbar-mobile-toggler" data-toggle="app-sidebar-mobile">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>

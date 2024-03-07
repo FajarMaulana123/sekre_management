@@ -180,7 +180,7 @@
             //     "emptyTable": "Data tidak ditemukan - Silahkan Filter data Rapat terlebih dahulu !"
             // },
             ajax: {
-                url: '/client_',
+                url: '/adm/client_',
                 method: 'POST',
                 data: function(d){
 
@@ -262,7 +262,7 @@
             }).then((result) => {
                 if (result.value) {
                     $.ajax({
-                        url: "/delete_client",
+                        url: "/adm/delete_client",
                         type: "POST",
                         data: {
                             id: id
@@ -310,9 +310,9 @@
             submitHandler: function(form) {
                 let url;
                 if ($('#hidden_status').val() == 'add') {
-                    url = '/create_client';
+                    url = '/adm/create_client';
                 } else {
-                    url = '/update_client';
+                    url = '/adm/update_client';
                 }
                 $.ajax({
                     url: url,
@@ -387,7 +387,7 @@
                     // console.log(datas);
                     if (result.value) {
                         $.ajax({
-                            url: '/update_status_client',
+                            url: '/adm/update_status_client',
                             type: "POST",
                             data: datas,
                             dataType: "JSON",

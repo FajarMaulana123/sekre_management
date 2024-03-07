@@ -9,6 +9,14 @@ use Illuminate\Http\Request;
  * @return response()
  */
 
+if (!function_exists('getProfile')) {
+    function getProfile()
+    {
+        $data = DB::table('profile')->first();
+        return $data;
+    }
+}
+
 if (!function_exists('groupModul')) {
     function groupModul()
     {

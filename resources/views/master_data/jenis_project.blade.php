@@ -98,7 +98,7 @@
             //     "emptyTable": "Data tidak ditemukan - Silahkan Filter data Rapat terlebih dahulu !"
             // },
             ajax: {
-                url: '/jenis_project_',
+                url: '/adm/jenis_project_',
                 method: 'POST',
                 data: function(d){
 
@@ -169,7 +169,7 @@
             }).then((result) => {
                 if (result.value) {
                     $.ajax({
-                        url: "/delete_jenis_project",
+                        url: "/adm/delete_jenis_project",
                         type: "POST",
                         data: {
                             id: id
@@ -207,9 +207,9 @@
             submitHandler: function(form) {
                 let url;
                 if ($('#hidden_status').val() == 'add') {
-                    url = '/create_jenis_project';
+                    url = '/adm/create_jenis_project';
                 } else {
-                    url = '/update_jenis_project';
+                    url = '/adm/update_jenis_project';
                 }
                 $.ajax({
                     url: url,

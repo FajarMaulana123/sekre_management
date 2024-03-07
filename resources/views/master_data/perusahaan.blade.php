@@ -132,7 +132,7 @@
             //     "emptyTable": "Data tidak ditemukan - Silahkan Filter data Rapat terlebih dahulu !"
             // },
             ajax: {
-                url: '/perusahaan_',
+                url: '/adm/perusahaan_',
                 method: 'POST',
                 data: function(d){
 
@@ -205,7 +205,7 @@
             }).then((result) => {
                 if (result.value) {
                     $.ajax({
-                        url: "/delete_perusahaan",
+                        url: "/adm/delete_perusahaan",
                         type: "POST",
                         data: {
                             id: id
@@ -253,9 +253,9 @@
             submitHandler: function(form) {
                 let url;
                 if ($('#hidden_status').val() == 'add') {
-                    url = '/create_perusahaan';
+                    url = '/adm/create_perusahaan';
                 } else {
-                    url = '/update_perusahaan';
+                    url = '/adm/update_perusahaan';
                 }
                 $.ajax({
                     url: url,

@@ -13,7 +13,7 @@ class LoginController extends Controller
     {
         // dd('sad');  
         if ($user = Auth::user()) {
-            return redirect()->intended('/');
+            return redirect()->intended('/adm');
         }
         return view('auth.login');
     }
@@ -93,7 +93,7 @@ class LoginController extends Controller
             $request->session()->put('admin_modules', $admin_modules);
             $request->session()->put('admin_modules_name', $admin_modules_name);
             $request->session()->put('admin_module_group', $admin_module_group);
-            return redirect()->intended('/');
+            return redirect()->intended('/adm');
         } else {
             return redirect()->intended('login');
         }

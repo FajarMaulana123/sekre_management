@@ -139,7 +139,7 @@
             //     "emptyTable": "Data tidak ditemukan - Silahkan Filter data Rapat terlebih dahulu !"
             // },
             ajax: {
-                url: '/transaksi_',
+                url: '/adm/transaksi_',
                 method: 'POST',
                 data: function(d){
 
@@ -218,9 +218,9 @@
             submitHandler: function(form) {
                 let url;
                 if ($('#hidden_status').val() == 'add') {
-                    url = '/create_transaksi';
+                    url = '/adm/create_transaksi';
                 } else {
-                    url = '/update_transaksi';
+                    url = '/adm/update_transaksi';
                 }
                 $.ajax({
                     url: url,

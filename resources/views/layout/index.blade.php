@@ -4,6 +4,9 @@
 	@include('layout.header')
 </head>
 <body>
+	<?php 
+		$profile = getProfile();
+	?>
 	<!-- BEGIN #loader -->
 	<div id="loader" class="app-loader">
 		<span class="spinner"></span>
