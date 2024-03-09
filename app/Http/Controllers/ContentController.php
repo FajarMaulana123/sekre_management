@@ -410,4 +410,123 @@ class ContentController extends Controller
         }
         return response()->json($r);
     }
+
+    public function portofolio()
+    {
+        hasModule('PORTOFOLIO');
+        $data['role'] = 'PORTOFOLIO';
+        $data['group'] = 'CMS';
+        $data['kategori'] = DB::table('kategori_porto')->get();
+        return view('cms.portofolio', compact('data'));
+    }
+
+    public function portofolio_(Request $request)
+    {
+        hasModule('PORTOFOLIO');
+        if ($request->ajax()) {
+            $data = DB::table('portofolio');
+            $data->where('deleted', '!=', 1)->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($field) {
+                    $actionBtn = '<div class="d-flex"><a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-warning edit mr-1" data-id="' . $field->id . '" data-nama="' . $field->nama . '" data-deskripsi="' . $field->deskripsi . '" data-foto="' . $field->foto . '" data-video="' . $field->video . '"  data-id_kategori="' . $field->id_kategori . '" ><i class="fas fa-pen fa-xs"></i></a>
+                    <a href="javascript:void(0);" style="margin-left:5px" class="btn btn-xs waves-effect waves-light btn-outline-danger delete " data-id="' . $field->id . '"><i class="fas fa-trash fa-xs"></i></a>
+                    </div>';
+                    return $actionBtn;
+                })
+
+                ->rawColumns(['action'])
+                ->addIndexColumn()
+                ->make(true);
+        }
+    }
+
+    public function create_portofolio(Request $request)
+    {
+        hasModule('PORTOFOLIO');
+        if ($request->ajax()) {
+            $data['nama'] = $request->nama;
+            $data['id_kategori'] = $request->id_kategori;
+            $data['deskripsi'] = $request->deskripsi;
+            $data['video'] = $request->video;
+            if ($request->file('foto')) {
+                $file = $request->file('foto');
+                $fileName = time() . rand(1, 99) . '_' . $file->getClientOriginalName();
+                $file->move('uploads/portofolio', $fileName);
+                $file_path = 'uploads/portofolio/' . $fileName;
+                $data['foto'] = $file_path;
+            }
+
+            $data['created_date'] = date('Y-m-d');
+            $data['created_by'] = auth()->user()->id;
+            // dd(auth()->user()->roles);
+            DB::beginTransaction();
+            try {
+                DB::table('portofolio')->insert($data);
+                // dd('asd');
+                DB::commit();
+                $r['result'] = true;
+            } catch (\Exception $e) {
+                DB::rollback();
+                $r['result'] = false;
+            }
+
+            echo json_encode($r);
+            return;
+        }
+    }
+
+    public function update_portofolio(Request $request)
+    {
+        hasModule('PORTOFOLIO');
+        if ($request->ajax()) {
+            $data['nama'] = $request->nama;
+            $data['id_kategori'] = $request->id_kategori;
+            $data['deskripsi'] = $request->deskripsi;
+            $data['video'] = $request->video;
+            if ($request->file('foto')) {
+                $file = $request->file('foto');
+                $fileName = time() . rand(1, 99) . '_' . $file->getClientOriginalName();
+                $file->move('uploads/portofolio', $fileName);
+                $file_path = 'uploads/portofolio/' . $fileName;
+                $data['foto'] = $file_path;
+            }
+
+            $data['edited_date'] = date('Y-m-d');
+            $data['edited_by'] = auth()->user()->id;
+            // dd($data, $request->hidden_id);
+            DB::beginTransaction();
+            try {
+                DB::table('portofolio')->where('id', $request->hidden_id)->update($data);
+                // dd('asd');
+                DB::commit();
+                $r['result'] = true;
+            } catch (\Exception $e) {
+                DB::rollback();
+                $r['result'] = false;
+            }
+
+            echo json_encode($r);
+            return;
+        }
+    }
+
+    public function delete_portofolio(Request $request)
+    {
+        hasModule('PORTOFOLIO');
+        // dd($request->id);
+        $data = DB::table('portofolio')->where('id', $request->id)->update([
+            'deleted' => 1,
+        ]);
+        if ($data) {
+            $r['title'] = 'Sukses!';
+            $r['icon'] = 'success';
+            $r['status'] = 'Berhasil di Hapus!';
+        } else {
+            $r['title'] = 'Maaf!';
+            $r['icon'] = 'error';
+            $r['status'] = '<br><b>Tidak dapat di Hapus! <br> Silakan hubungi Administrator.</b>';
+        }
+        return response()->json($r);
+    }
 }

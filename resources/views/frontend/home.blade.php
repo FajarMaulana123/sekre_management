@@ -3,6 +3,19 @@
     Welcome Sektor Kreatif
 @endsection
 @section('content')
+<section id="hero" class="d-flex flex-column justify-content-center align-items-center">
+    <div class="container text-center text-md-left" data-aos="fade-up">
+      <h1>Welcome to <span> Sektor Kreatif</span>
+        {{-- <a href="" class="typewrite" data-period="2000" data-type='[ "Sektor Kreatif" ]'>
+            <span class="wrap text-white"></span>
+        </a> --}}
+      </h1>
+      <h2>We are team of talented designers making websites with Bootstrap</h2>
+      <a href="#about" class="btn-get-started scrollto">Start Project</a>
+    </div>
+  </section><!-- End Hero -->
+
+  <main id="main">
 <!-- ======= What We Do Section ======= -->
     <section id="what-we-do" class="what-we-do">
       <div class="container">
@@ -231,154 +244,33 @@
           <p>Sit sint consectetur velit quisquam cupiditate impedit suscipit</p>
         </div>
 
-        <div class="row">
-          <div class="col-lg-12">
-            <ul id="portfolio-flters">
-              <li data-filter="*" class="filter-active">All</li>
-              <li data-filter=".filter-app">App</li>
-              <li data-filter=".filter-card">Card</li>
-              <li data-filter=".filter-web">Web</li>
-            </ul>
-          </div>
-        </div>
-
         <div class="row portfolio-container">
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-app wow fadeInUp">
+          @foreach($data['portofolio'] as $val)
+          <?php 
+            $foto = ($val->foto != null) ? asset($val->foto) : asset('/uploads/noimage.jpg');
+          ?>
+          <div class="col-lg-3 col-md-4 portfolio-item filter-app wow fadeInUp">
             <div class="portfolio-wrap">
               <figure>
-                <img src="assets/img/portfolio/portfolio-1.jpg" class="img-fluid" alt="">
-                <a href="assets/img/portfolio/portfolio-1.jpg" data-gallery="portfolioGallery" class="link-preview portfolio-lightbox" title="Preview"><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" class="link-details" title="More Details"><i class="bx bx-link"></i></a>
+                <img src="{{$foto}}" class="img-fluid" alt="">
+                <a href="{{$foto}}" data-gallery="portfolioGallery" class="link-preview portfolio-lightbox" title="Preview"><i class="bx bx-plus"></i></a>
+                <a href="/detail_portofolio/{{\Crypt::encrypt($val->id)}}" class="link-details" title="More Details"><i class="bx bx-link"></i></a>
               </figure>
 
               <div class="portfolio-info">
-                <h4><a href="portfolio-details.html">App 1</a></h4>
-                <p>App</p>
+                <h4><a href="/detail_portofolio/{{\Crypt::encrypt($val->id)}}">{{$val->nama}}</a></h4>
+                <p>{{$val->kategori}}</p>
               </div>
             </div>
           </div>
+          @endforeach
 
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web wow fadeInUp" data-wow-delay="0.1s">
-            <div class="portfolio-wrap">
-              <figure>
-                <img src="assets/img/portfolio/portfolio-2.jpg" class="img-fluid" alt="">
-                <a href="assets/img/portfolio/portfolio-2.jpg" class="link-preview portfolio-lightbox" data-gallery="portfolioGallery" title="Preview"><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" class="link-details" title="More Details"><i class="bx bx-link"></i></a>
-              </figure>
 
-              <div class="portfolio-info">
-                <h4><a href="portfolio-details.html">Web 3</a></h4>
-                <p>Web</p>
-              </div>
-            </div>
-          </div>
+        
 
-          <div class="col-lg-4 col-md-6 portfolio-item filter-app wow fadeInUp" data-wow-delay="0.2s">
-            <div class="portfolio-wrap">
-              <figure>
-                <img src="assets/img/portfolio/portfolio-3.jpg" class="img-fluid" alt="">
-                <a href="assets/img/portfolio/portfolio-3.jpg" class="link-preview portfolio-lightbox" data-gallery="portfolioGallery" title="Preview"><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" class="link-details" title="More Details"><i class="bx bx-link"></i></a>
-              </figure>
-
-              <div class="portfolio-info">
-                <h4><a href="portfolio-details.html">App 2</a></h4>
-                <p>App</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-card wow fadeInUp">
-            <div class="portfolio-wrap">
-              <figure>
-                <img src="assets/img/portfolio/portfolio-4.jpg" class="img-fluid" alt="">
-                <a href="assets/img/portfolio/portfolio-4.jpg" class="link-preview portfolio-lightbox" data-gallery="portfolioGallery" title="Preview"><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" class="link-details" title="More Details"><i class="bx bx-link"></i></a>
-              </figure>
-
-              <div class="portfolio-info">
-                <h4><a href="portfolio-details.html">Card 2</a></h4>
-                <p>Card</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web wow fadeInUp" data-wow-delay="0.1s">
-            <div class="portfolio-wrap">
-              <figure>
-                <img src="assets/img/portfolio/portfolio-5.jpg" class="img-fluid" alt="">
-                <a href="assets/img/portfolio/portfolio-5.jpg" class="link-preview portfolio-lightbox" data-gallery="portfolioGallery" title="Preview"><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" class="link-details" title="More Details"><i class="bx bx-link"></i></a>
-              </figure>
-
-              <div class="portfolio-info">
-                <h4><a href="portfolio-details.html">Web 2</a></h4>
-                <p>Web</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-app wow fadeInUp" data-wow-delay="0.2s">
-            <div class="portfolio-wrap">
-              <figure>
-                <img src="assets/img/portfolio/portfolio-6.jpg" class="img-fluid" alt="">
-                <a href="assets/img/portfolio/portfolio-6.jpg" class="link-preview portfolio-lightbox" data-gallery="portfolioGallery" title="Preview"><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" class="link-details" title="More Details"><i class="bx bx-link"></i></a>
-              </figure>
-
-              <div class="portfolio-info">
-                <h4><a href="portfolio-details.html">App 3</a></h4>
-                <p>App</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-card wow fadeInUp">
-            <div class="portfolio-wrap">
-              <figure>
-                <img src="assets/img/portfolio/portfolio-7.jpg" class="img-fluid" alt="">
-                <a href="assets/img/portfolio/portfolio-7.jpg" class="link-preview portfolio-lightbox" data-gallery="portfolioGallery" title="Preview"><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" class="link-details" title="More Details"><i class="bx bx-link"></i></a>
-              </figure>
-
-              <div class="portfolio-info">
-                <h4><a href="portfolio-details.html">Card 1</a></h4>
-                <p>Card</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-card wow fadeInUp" data-wow-delay="0.1s">
-            <div class="portfolio-wrap">
-              <figure>
-                <img src="assets/img/portfolio/portfolio-8.jpg" class="img-fluid" alt="">
-                <a href="assets/img/portfolio/portfolio-8.jpg" class="link-preview portfolio-lightbox" data-gallery="portfolioGallery" title="Preview"><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" class="link-details" title="More Details"><i class="bx bx-link"></i></a>
-              </figure>
-
-              <div class="portfolio-info">
-                <h4><a href="portfolio-details.html">Card 3</a></h4>
-                <p>Card</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web wow fadeInUp" data-wow-delay="0.2s">
-            <div class="portfolio-wrap">
-              <figure>
-                <img src="assets/img/portfolio/portfolio-9.jpg" class="img-fluid" alt="">
-                <a href="assets/img/portfolio/portfolio-9.jpg" class="link-preview portfolio-lightbox" data-gallery="portfolioGallery" title="Preview"><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" class="link-details" title="More Details"><i class="bx bx-link"></i></a>
-              </figure>
-
-              <div class="portfolio-info">
-                <h4><a href="portfolio-details.html">Web 1</a></h4>
-                <p>Web</p>
-              </div>
-            </div>
-          </div>
-
+        </div>
+        <div class="row justify-content-center">
+            <a href="/list_portofolio" class="btn btn-primary " style="width:200px">Selanjutnya</a>
         </div>
 
       </div>
@@ -439,9 +331,7 @@
               <img src="{{asset($foto)}}" alt="">
               <h4>{{$team->nama}}</h4>
               <span>{{$team->jabatan}}</span>
-               <p>
-                Magni qui quod omnis unde et eos fuga et exercitationem. Odio veritatis perspiciatis quaerat qui aut aut aut
-              </p>
+               
               <div class="social">
                 <a href="{{$team->fb}}"><i class="bi bi-facebook"></i></a>
                 <a href="{{$team->ig}}"><i class="bi bi-instagram"></i></a>
@@ -527,4 +417,5 @@
 
       </div>
     </section><!-- End Contact Section -->
+  </main>
 @endsection

@@ -23,6 +23,8 @@ Route::post('proses_login', [LoginController::class, 'proses_login'])->name('pro
 Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::get('/', [HomeController::class, 'home']);
+Route::get('/list_portofolio', [HomeController::class, 'portofolio']);
+Route::get('/detail_portofolio/{id}', [HomeController::class, 'detail_portofolio']);
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/adm', [AdminController::class, 'index'])->middleware('cek_login');
@@ -84,4 +86,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/adm/create_testimoni', [ContentController::class, 'create_testimoni'])->middleware('cek_login');
     Route::post('/adm/update_testimoni', [ContentController::class, 'update_testimoni'])->middleware('cek_login');
     Route::post('/adm/delete_testimoni', [ContentController::class, 'delete_testimoni'])->middleware('cek_login');
+
+    Route::get('/adm/portofolio', [ContentController::class, 'portofolio'])->middleware('cek_login');
+    Route::post('/adm/portofolio_', [ContentController::class, 'portofolio_'])->middleware('cek_login');
+    Route::post('/adm/create_portofolio', [ContentController::class, 'create_portofolio'])->middleware('cek_login');
+    Route::post('/adm/update_portofolio', [ContentController::class, 'update_portofolio'])->middleware('cek_login');
+    Route::post('/adm/delete_portofolio', [ContentController::class, 'delete_portofolio'])->middleware('cek_login');
 });

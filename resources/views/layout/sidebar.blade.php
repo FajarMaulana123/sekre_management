@@ -26,7 +26,7 @@
             </div>
                 <?php if( isLoggedIn()) : ?>
                     <?php if (forModule('DASHBOARD') || forModule('PERUSAHAAN') || forModule('CLIENT') || forModule('JENIS_PROJECT') || forModule('PROJECT') || forModule('TRANSAKSI') 
-                    || forModule('PROFILE') || forModule('MITRA') || forModule('TEAM') || forModule('TESTIMONI') || forModule('USER_MANAGEMENT')) : ?>
+                    || forModule('PROFILE') || forModule('MITRA') || forModule('TEAM') || forModule('TESTIMONI') || forModule('PORTOFOLIO') || forModule('USER_MANAGEMENT')) : ?>
                     
                         <div class="menu-header">Navigation</div>
                         <?php if (forModuleGroup('DASHBOARD')) : ?>
@@ -151,6 +151,16 @@
                                     <i class="fas fa-book fa-fw"></i>
                                     </div>
                                     <div class="menu-text">Testimoni</div>
+                                </a>
+                            </div>
+                            <?php endif; ?>
+                            <?php if (forModule('PORTOFOLIO')) : ?>
+                            <div class="menu-item <?php echo (Session::get('module') == $data['role'] ? 'active' : '') ?>">
+                                <a href="/adm/portofolio" class="menu-link">
+                                    <div class="menu-icon">
+                                    <i class="fas fa-book fa-fw"></i>
+                                    </div>
+                                    <div class="menu-text">Portofolio</div>
                                 </a>
                             </div>
                             <?php endif; ?>
