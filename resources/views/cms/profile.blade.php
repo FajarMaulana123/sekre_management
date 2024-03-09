@@ -20,7 +20,7 @@
                 <div class="row mb-2">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label>Nama Dinas</label>
+                            <label>Nama Perusahaan</label>
                             <input type="text" id="nama" name="nama" class="form-control" value="{{($data['data'] == null) ? '' : $data['data']->nama}}" >
                         </div>
                     </div>
@@ -80,36 +80,31 @@
                     </div>
                 </div>
                 <div class="row">
-                <div class="col-md-9">
-                    <div class="row mb-2">
-                        <div class="col-md-8">
-                            <div class="form-group">
-                                <label>Alamat</label>
-                                <textarea name="alamat" id="alamat" cols="30" rows="4" class="form-control">{{($data['data'] == null) ? '' : $data['data']->alamat}}</textarea>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="row mb-2">
+                    <div class="col-md-9">
+                        <div class="row mb-2">
+                            <div class="col-md-8">
                                 <div class="form-group">
-                                    <label>Latitude</label>
-                                    <input type="text" name="lat" id="lat" class="form-control" value="{{($data['data'] == null) ? '' : $data['data']->lat}}">
+                                    <label>Alamat</label>
+                                    <textarea name="alamat" id="alamat" cols="30" rows="4" class="form-control">{{($data['data'] == null) ? '' : $data['data']->alamat}}</textarea>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="form-group">
-                                    <label>Longitude</label>
-                                    <input type="text" name="long" id="long" class="form-control" value="{{($data['data'] == null) ? '' : $data['data']->long}}">
+                            <div class="col-md-4">
+                                <div class="row mb-2">
+                                    <div class="form-group">
+                                        <label>Latitude</label>
+                                        <input type="text" name="lat" id="lat" class="form-control" value="{{($data['data'] == null) ? '' : $data['data']->lat}}">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label>Longitude</label>
+                                        <input type="text" name="long" id="long" class="form-control" value="{{($data['data'] == null) ? '' : $data['data']->long}}">
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        
                     </div>
-                    <div class="row mb-2">
-                        <div style="align-items: right">
-                        <button type="reset" class="btn btn-dark">Reset</button>
-                        <button type="submit" class="btn btn-info">Submit</button>
-                        </div>
-                    </div>
-                </div>
                     <div class="col-md-3">
                         <div class="row mb-2">
                             <div class="form-group">
@@ -122,6 +117,20 @@
                                 <img id="imgPreview" src="#" alt="logo" style="width:-webkit-fill-available" />
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Tentang Kami</label>
+                            <textarea name="tentang_kami" id="tentang_kami" cols="30" rows="10" class="form-control form-control-sm tentang_kami">{{($data['data'] == null) ? '' : $data['data']->tentang_kami}}"</textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div style="align-items: right">
+                    <button type="reset" class="btn btn-dark">Reset</button>
+                    <button type="submit" class="btn btn-info">Submit</button>
                     </div>
                 </div>
             </form>
@@ -139,6 +148,10 @@ $(document).ready(function() {
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
+        });
+
+        $(".tentang_kami").summernote({
+            height: "300"
         });
 
          var image_ = "{{($data['data'] != null) ? asset($data['data']->logo) : asset('/uploads/noimage.jpg')}}";
@@ -196,6 +209,9 @@ $(document).ready(function() {
                 long: {
                     required: true
                 },
+                tentang_kami: {
+                    required: true
+                }
             },
             submitHandler: function(form) {
                 let url;

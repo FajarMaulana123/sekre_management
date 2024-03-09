@@ -66,4 +66,22 @@ Route::group(['middleware' => ['auth']], function () {
     //CMS
     Route::get('/adm/profile', [ContentController::class, 'profile'])->middleware('cek_login');
     Route::post('/adm/create_profile', [ContentController::class, 'create_profile'])->middleware('cek_login');
+
+    Route::get('/adm/mitra', [ContentController::class, 'mitra'])->middleware('cek_login');
+    Route::post('/adm/mitra_', [ContentController::class, 'mitra_'])->middleware('cek_login');
+    Route::post('/adm/create_mitra', [ContentController::class, 'create_mitra'])->middleware('cek_login');
+    Route::post('/adm/update_mitra', [ContentController::class, 'update_mitra'])->middleware('cek_login');
+    Route::post('/adm/delete_mitra', [ContentController::class, 'delete_mitra'])->middleware('cek_login');
+
+    Route::get('/adm/team', [ContentController::class, 'team'])->middleware('cek_login');
+    Route::post('/adm/team_', [ContentController::class, 'team_'])->middleware('cek_login');
+    Route::post('/adm/create_team', [ContentController::class, 'create_team'])->middleware('cek_login');
+    Route::post('/adm/update_team', [ContentController::class, 'update_team'])->middleware('cek_login');
+    Route::post('/adm/delete_team', [ContentController::class, 'delete_team'])->middleware('cek_login');
+
+    Route::get('/adm/testimoni', [ContentController::class, 'testimoni'])->middleware('cek_login');
+    Route::post('/adm/testimoni_', [ContentController::class, 'testimoni_'])->middleware('cek_login');
+    Route::post('/adm/create_testimoni', [ContentController::class, 'create_testimoni'])->middleware('cek_login');
+    Route::post('/adm/update_testimoni', [ContentController::class, 'update_testimoni'])->middleware('cek_login');
+    Route::post('/adm/delete_testimoni', [ContentController::class, 'delete_testimoni'])->middleware('cek_login');
 });

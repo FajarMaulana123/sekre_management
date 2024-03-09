@@ -43,11 +43,11 @@
 			<div class="login-container" style="background-color:#00000;">
 				<!-- BEGIN login-header -->
 				<div class="login-header mb-30px">
-					<div class="brand">
+					<div class="brand ">
 						<div class="d-flex align-items-center mb-2">
-							<img src="" class="img-fluid" style="margin-right:10px" width="50%" alt="">
+							<img src="{{asset(getProfile()->logo)}}" class="img-fluid" style="margin-right:10px" width="50%" alt="">
 						</div>
-						<small>SEKRE Management</small>
+						<small>Sektor Kreatif Management</small>
 					</div>
 				</div>
 				<!-- END login-header -->
