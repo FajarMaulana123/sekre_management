@@ -10,6 +10,7 @@ use Yajra\DataTables\DataTables;
 
 class ContentController extends Controller
 {
+
     public function profile()
     {
         hasModule('PROFILE');
@@ -516,6 +517,127 @@ class ContentController extends Controller
         hasModule('PORTOFOLIO');
         // dd($request->id);
         $data = DB::table('portofolio')->where('id', $request->id)->update([
+            'deleted' => 1,
+        ]);
+        if ($data) {
+            $r['title'] = 'Sukses!';
+            $r['icon'] = 'success';
+            $r['status'] = 'Berhasil di Hapus!';
+        } else {
+            $r['title'] = 'Maaf!';
+            $r['icon'] = 'error';
+            $r['status'] = '<br><b>Tidak dapat di Hapus! <br> Silakan hubungi Administrator.</b>';
+        }
+        return response()->json($r);
+    }
+
+    public function service()
+    {
+        hasModule('SERVICE');
+        $data['role'] = 'SERVICE';
+        $data['group'] = 'CMS';
+        return view('cms.service', compact('data'));
+    }
+
+    public function service_(Request $request)
+    {
+        hasModule('SERVICE');
+        if ($request->ajax()) {
+            $data = DB::table('service');
+            $data->where('deleted', '!=', 1)->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($field) {
+                    $actionBtn = '<div class="d-flex"><a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-warning edit mr-1" data-id="' . $field->id . '" data-nama="' . $field->nama . '"  data-deskripsi="' . $field->deskripsi . '" data-icon="' . $field->icon . '" ><i class="fas fa-pen fa-xs"></i></a>
+                    <a href="javascript:void(0);" style="margin-left:5px" class="btn btn-xs waves-effect waves-light btn-outline-danger delete " data-id="' . $field->id . '"><i class="fas fa-trash fa-xs"></i></a>
+                    </div>';
+                    return $actionBtn;
+                })
+                ->addColumn('icon', function ($field) {
+                    $data = asset($field->icon);
+                    $icon = '<img src="' . $data . '" alt="icon" style="width:50px;hight:50px" />';
+                    return $icon;
+                })
+                ->rawColumns(['action', 'icon'])
+                ->addIndexColumn()
+                ->make(true);
+        }
+    }
+
+    public function create_service(Request $request)
+    {
+        hasModule('SERVICE');
+        if ($request->ajax()) {
+            $data['nama'] = $request->nama;
+            $data['deskripsi'] = $request->deskripsi;
+
+            if ($request->file('icon')) {
+                $file = $request->file('icon');
+                $fileName = time() . rand(1, 99) . '_' . $file->getClientOriginalName();
+                $file->move('uploads/icon', $fileName);
+                $file_path = 'uploads/icon/' . $fileName;
+                $data['icon'] = $file_path;
+            }
+
+            $data['created_date'] = date('Y-m-d');
+            $data['created_by'] = auth()->user()->id;
+            // dd(auth()->user()->roles);
+            DB::beginTransaction();
+            try {
+                DB::table('service')->insert($data);
+                // dd('asd');
+                DB::commit();
+                $r['result'] = true;
+            } catch (\Exception $e) {
+                DB::rollback();
+                $r['result'] = false;
+            }
+
+            echo json_encode($r);
+            return;
+        }
+    }
+
+    public function update_service(Request $request)
+    {
+        hasModule('SERVICE');
+        if ($request->ajax()) {
+            $data['nama'] = $request->nama;
+            $data['deskripsi'] = $request->deskripsi;
+
+
+            if ($request->file('icon')) {
+                $file = $request->file('icon');
+                $fileName = time() . rand(1, 99) . '_' . $file->getClientOriginalName();
+                $file->move('uploads/icon', $fileName);
+                $file_path = 'uploads/icon/' . $fileName;
+                $data['icon'] = $file_path;
+            }
+
+            $data['edited_date'] = date('Y-m-d');
+            $data['edited_by'] = auth()->user()->id;
+            // dd($data, $request->hidden_id);
+            DB::beginTransaction();
+            try {
+                DB::table('service')->where('id', $request->hidden_id)->update($data);
+                // dd('asd');
+                DB::commit();
+                $r['result'] = true;
+            } catch (\Exception $e) {
+                DB::rollback();
+                $r['result'] = false;
+            }
+
+            echo json_encode($r);
+            return;
+        }
+    }
+
+    public function delete_service(Request $request)
+    {
+        hasModule('SERVICE');
+        // dd($request->id);
+        $data = DB::table('service')->where('id', $request->id)->update([
             'deleted' => 1,
         ]);
         if ($data) {

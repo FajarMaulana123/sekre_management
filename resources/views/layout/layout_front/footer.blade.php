@@ -5,6 +5,7 @@
 <script src="{{ asset('assets_front/vendor/swiper/swiper-bundle.min.js')}}"></script>
 <script src="{{ asset('assets_front/vendor/waypoints/noframework.waypoints.js')}}"></script>
 <script src="{{ asset('assets_front/vendor/php-email-form/validate.js')}}"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 
 <!-- Template Main JS File -->
 <script src="{{ asset('assets_front/js/main.js')}}"></script>

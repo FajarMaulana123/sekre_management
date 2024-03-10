@@ -92,4 +92,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/adm/create_portofolio', [ContentController::class, 'create_portofolio'])->middleware('cek_login');
     Route::post('/adm/update_portofolio', [ContentController::class, 'update_portofolio'])->middleware('cek_login');
     Route::post('/adm/delete_portofolio', [ContentController::class, 'delete_portofolio'])->middleware('cek_login');
+
+    Route::get('/adm/service', [ContentController::class, 'service'])->middleware('cek_login');
+    Route::post('/adm/service_', [ContentController::class, 'service_'])->middleware('cek_login');
+    Route::post('/adm/create_service', [ContentController::class, 'create_service'])->middleware('cek_login');
+    Route::post('/adm/update_service', [ContentController::class, 'update_service'])->middleware('cek_login');
+    Route::post('/adm/delete_service', [ContentController::class, 'delete_service'])->middleware('cek_login');
 });
