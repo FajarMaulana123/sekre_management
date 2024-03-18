@@ -430,7 +430,7 @@ class ContentController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($field) {
-                    $actionBtn = '<div class="d-flex"><a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-warning edit mr-1" data-id="' . $field->id . '" data-nama="' . $field->nama . '" data-deskripsi="' . $field->deskripsi . '" data-foto="' . $field->foto . '" data-video="' . $field->video . '"  data-id_kategori="' . $field->id_kategori . '" ><i class="fas fa-pen fa-xs"></i></a>
+                    $actionBtn = '<div class="d-flex"><a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-warning edit mr-1" data-id="' . $field->id . '" data-nama="' . $field->nama . '" data-deskripsi="' . $field->deskripsi . '" data-foto="' . asset($field->foto) . '" data-video="' . $field->video . '"  data-id_kategori="' . $field->id_kategori . '" ><i class="fas fa-pen fa-xs"></i></a>
                     <a href="javascript:void(0);" style="margin-left:5px" class="btn btn-xs waves-effect waves-light btn-outline-danger delete " data-id="' . $field->id . '"><i class="fas fa-trash fa-xs"></i></a>
                     </div>';
                     return $actionBtn;
@@ -536,6 +536,7 @@ class ContentController extends Controller
         hasModule('SERVICE');
         $data['role'] = 'SERVICE';
         $data['group'] = 'CMS';
+        $data['flow_work'] = DB::table('flow_work')->where('deleted', '!=', 1)->get();
         return view('cms.service', compact('data'));
     }
 
@@ -545,10 +546,11 @@ class ContentController extends Controller
         if ($request->ajax()) {
             $data = DB::table('service');
             $data->where('deleted', '!=', 1)->get();
+            // dd($data);
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($field) {
-                    $actionBtn = '<div class="d-flex"><a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-warning edit mr-1" data-id="' . $field->id . '" data-nama="' . $field->nama . '"  data-deskripsi="' . $field->deskripsi . '" data-icon="' . $field->icon . '" ><i class="fas fa-pen fa-xs"></i></a>
+                    $actionBtn = '<div class="d-flex"><a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-warning edit mr-1" data-id="' . $field->id . '" data-id_flow_work=' . $field->id_flow_work . '" data-nama=' . $field->nama . '"  data-deskripsi="' . $field->deskripsi . '" data-icon="' . asset($field->icon) . '" ><i class="fas fa-pen fa-xs"></i></a>
                     <a href="javascript:void(0);" style="margin-left:5px" class="btn btn-xs waves-effect waves-light btn-outline-danger delete " data-id="' . $field->id . '"><i class="fas fa-trash fa-xs"></i></a>
                     </div>';
                     return $actionBtn;
@@ -558,7 +560,16 @@ class ContentController extends Controller
                     $icon = '<img src="' . $data . '" alt="icon" style="width:50px;hight:50px" />';
                     return $icon;
                 })
-                ->rawColumns(['action', 'icon'])
+                ->addColumn('flow_work', function ($field) {
+                    $id = json_decode($field->id_flow_work);
+                    $get = DB::table('flow_work')->whereIn('id', $id)->get();
+                    $flow = '';
+                    foreach ($get as $val) {
+                        $flow .= '- ' . $val->nama . '<br>';
+                    }
+                    return $flow;
+                })
+                ->rawColumns(['action', 'icon', 'flow_work'])
                 ->addIndexColumn()
                 ->make(true);
         }
@@ -570,6 +581,7 @@ class ContentController extends Controller
         if ($request->ajax()) {
             $data['nama'] = $request->nama;
             $data['deskripsi'] = $request->deskripsi;
+            $data['id_flow_work'] = json_encode($request->id_flow_work);
 
             if ($request->file('icon')) {
                 $file = $request->file('icon');
@@ -604,7 +616,7 @@ class ContentController extends Controller
         if ($request->ajax()) {
             $data['nama'] = $request->nama;
             $data['deskripsi'] = $request->deskripsi;
-
+            $data['id_flow_work'] = json_encode($request->id_flow_work);
 
             if ($request->file('icon')) {
                 $file = $request->file('icon');
@@ -638,6 +650,541 @@ class ContentController extends Controller
         hasModule('SERVICE');
         // dd($request->id);
         $data = DB::table('service')->where('id', $request->id)->update([
+            'deleted' => 1,
+        ]);
+        if ($data) {
+            $r['title'] = 'Sukses!';
+            $r['icon'] = 'success';
+            $r['status'] = 'Berhasil di Hapus!';
+        } else {
+            $r['title'] = 'Maaf!';
+            $r['icon'] = 'error';
+            $r['status'] = '<br><b>Tidak dapat di Hapus! <br> Silakan hubungi Administrator.</b>';
+        }
+        return response()->json($r);
+    }
+
+    public function foto_kegiatan()
+    {
+        hasModule('FOTO_KEGIATAN');
+        $data['role'] = 'FOTO_KEGIATAN';
+        $data['group'] = 'CMS';
+        return view('cms.foto_kegiatan', compact('data'));
+    }
+
+    public function foto_kegiatan_(Request $request)
+    {
+        hasModule('FOTO_KEGIATAN');
+        if ($request->ajax()) {
+            $data = DB::table('foto_kegiatan');
+            $data->where('deleted', '!=', 1)->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($field) {
+                    $actionBtn = '<div class="d-flex"><a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-warning edit mr-1" data-id="' . $field->id . '" data-nama="' . $field->nama . '"  data-deskripsi="' . $field->deskripsi . '" data-foto="' . asset($field->foto) . '" ><i class="fas fa-pen fa-xs"></i></a>
+                    <a href="javascript:void(0);" style="margin-left:5px" class="btn btn-xs waves-effect waves-light btn-outline-danger delete " data-id="' . $field->id . '"><i class="fas fa-trash fa-xs"></i></a>
+                    </div>';
+                    return $actionBtn;
+                })
+                ->addColumn('foto', function ($field) {
+                    $data = asset($field->foto);
+                    $foto = '<img src="' . $data . '" alt="foto" style="width:50px;hight:50px" />';
+                    return $foto;
+                })
+                ->rawColumns(['action', 'foto'])
+                ->addIndexColumn()
+                ->make(true);
+        }
+    }
+
+    public function create_foto_kegiatan(Request $request)
+    {
+        hasModule('FOTO_KEGIATAN');
+        if ($request->ajax()) {
+            $data['nama'] = $request->nama;
+            $data['deskripsi'] = $request->deskripsi;
+
+            if ($request->file('foto')) {
+                $file = $request->file('foto');
+                $fileName = time() . rand(1, 99) . '_' . $file->getClientOriginalName();
+                $file->move('uploads/foto_kegiatan', $fileName);
+                $file_path = 'uploads/foto_kegiatan/' . $fileName;
+                $data['foto'] = $file_path;
+            }
+
+            $data['created_date'] = date('Y-m-d');
+            $data['created_by'] = auth()->user()->id;
+            // dd(auth()->user()->roles);
+            DB::beginTransaction();
+            try {
+                DB::table('foto_kegiatan')->insert($data);
+                // dd('asd');
+                DB::commit();
+                $r['result'] = true;
+            } catch (\Exception $e) {
+                DB::rollback();
+                $r['result'] = false;
+            }
+
+            echo json_encode($r);
+            return;
+        }
+    }
+
+    public function update_foto_kegiatan(Request $request)
+    {
+        hasModule('FOTO_KEGIATAN');
+        if ($request->ajax()) {
+            $data['nama'] = $request->nama;
+            $data['deskripsi'] = $request->deskripsi;
+
+
+            if ($request->file('foto')) {
+                $file = $request->file('foto');
+                $fileName = time() . rand(1, 99) . '_' . $file->getClientOriginalName();
+                $file->move('uploads/foto_kegiatan', $fileName);
+                $file_path = 'uploads/foto_kegiatan/' . $fileName;
+                $data['foto'] = $file_path;
+            }
+
+            $data['edited_date'] = date('Y-m-d');
+            $data['edited_by'] = auth()->user()->id;
+            // dd($data, $request->hidden_id);
+            DB::beginTransaction();
+            try {
+                DB::table('foto_kegiatan')->where('id', $request->hidden_id)->update($data);
+                // dd('asd');
+                DB::commit();
+                $r['result'] = true;
+            } catch (\Exception $e) {
+                DB::rollback();
+                $r['result'] = false;
+            }
+
+            echo json_encode($r);
+            return;
+        }
+    }
+
+    public function delete_foto_kegiatan(Request $request)
+    {
+        hasModule('FOTO_KEGIATAN');
+        // dd($request->id);
+        $data = DB::table('foto_kegiatan')->where('id', $request->id)->update([
+            'deleted' => 1,
+        ]);
+        if ($data) {
+            $r['title'] = 'Sukses!';
+            $r['icon'] = 'success';
+            $r['status'] = 'Berhasil di Hapus!';
+        } else {
+            $r['title'] = 'Maaf!';
+            $r['icon'] = 'error';
+            $r['status'] = '<br><b>Tidak dapat di Hapus! <br> Silakan hubungi Administrator.</b>';
+        }
+        return response()->json($r);
+    }
+
+    public function kenapa_harus_kami()
+    {
+        hasModule('KENAPA_HARUS_KAMI');
+        $data['role'] = 'KENAPA_HARUS_KAMI';
+        $data['group'] = 'CMS';
+        return view('cms.kenapa_harus_kami', compact('data'));
+    }
+
+    public function kenapa_harus_kami_(Request $request)
+    {
+        hasModule('KENAPA_HARUS_KAMI');
+        if ($request->ajax()) {
+            $data = DB::table('kenapa_harus_kami');
+            $data->where('deleted', '!=', 1)->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($field) {
+                    $actionBtn = '<div class="d-flex"><a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-warning edit mr-1" data-id="' . $field->id . '" data-judul="' . $field->judul . '" data-deskripsi="' . $field->deskripsi . '" ><i class="fas fa-pen fa-xs"></i></a>
+                    <a href="javascript:void(0);" style="margin-left:5px" class="btn btn-xs waves-effect waves-light btn-outline-danger delete " data-id="' . $field->id . '"><i class="fas fa-trash fa-xs"></i></a>
+                    </div>';
+                    return $actionBtn;
+                })
+
+                ->rawColumns(['action'])
+                ->addIndexColumn()
+                ->make(true);
+        }
+    }
+
+    public function create_kenapa_harus_kami(Request $request)
+    {
+        hasModule('KENAPA_HARUS_KAMI');
+        if ($request->ajax()) {
+            $data['judul'] = $request->judul;
+            $data['deskripsi'] = $request->deskripsi;
+
+
+            $data['created_date'] = date('Y-m-d');
+            $data['created_by'] = auth()->user()->id;
+            // dd(auth()->user()->roles);
+            DB::beginTransaction();
+            try {
+                DB::table('kenapa_harus_kami')->insert($data);
+                // dd('asd');
+                DB::commit();
+                $r['result'] = true;
+            } catch (\Exception $e) {
+                DB::rollback();
+                $r['result'] = false;
+            }
+
+            echo json_encode($r);
+            return;
+        }
+    }
+
+    public function update_kenapa_harus_kami(Request $request)
+    {
+        hasModule('KENAPA_HARUS_KAMI');
+        if ($request->ajax()) {
+            $data['judul'] = $request->judul;
+            $data['deskripsi'] = $request->deskripsi;
+
+            $data['edited_date'] = date('Y-m-d');
+            $data['edited_by'] = auth()->user()->id;
+            // dd($data, $request->hidden_id);
+            DB::beginTransaction();
+            try {
+                DB::table('kenapa_harus_kami')->where('id', $request->hidden_id)->update($data);
+                // dd('asd');
+                DB::commit();
+                $r['result'] = true;
+            } catch (\Exception $e) {
+                DB::rollback();
+                $r['result'] = false;
+            }
+
+            echo json_encode($r);
+            return;
+        }
+    }
+
+    public function delete_kenapa_harus_kami(Request $request)
+    {
+        hasModule('KENAPA_HARUS_KAMI');
+        // dd($request->id);
+        $data = DB::table('kenapa_harus_kami')->where('id', $request->id)->update([
+            'deleted' => 1,
+        ]);
+        if ($data) {
+            $r['title'] = 'Sukses!';
+            $r['icon'] = 'success';
+            $r['status'] = 'Berhasil di Hapus!';
+        } else {
+            $r['title'] = 'Maaf!';
+            $r['icon'] = 'error';
+            $r['status'] = '<br><b>Tidak dapat di Hapus! <br> Silakan hubungi Administrator.</b>';
+        }
+        return response()->json($r);
+    }
+
+    public function paket()
+    {
+        hasModule('PAKET');
+        $data['role'] = 'PAKET';
+        $data['group'] = 'CMS';
+        $data['paket_detail'] = DB::table('paket_detail')->where('deleted', '!=', 1)->get();
+        return view('cms.paket', compact('data'));
+    }
+
+    public function paket_(Request $request)
+    {
+        hasModule('PAKET');
+        if ($request->ajax()) {
+            $data = DB::table('paket');
+            $data->where('deleted', '!=', 1)->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($field) {
+                    $actionBtn = '<div class="d-flex"><a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-warning edit mr-1" data-id="' . $field->id . '" data-nama="' . $field->nama . '" data-harga="' . $field->harga . '" data-id_paket_detail=' . $field->id_paket_detail . '><i class="fas fa-pen fa-xs"></i></a>
+                    <a href="javascript:void(0);" style="margin-left:5px" class="btn btn-xs waves-effect waves-light btn-outline-danger delete " data-id="' . $field->id . '"><i class="fas fa-trash fa-xs"></i></a>
+                    </div>';
+                    return $actionBtn;
+                })
+                ->addColumn('paket_detail', function ($field) {
+                    $id = json_decode($field->id_paket_detail);
+                    $get = DB::table('paket_detail')->whereIn('id', $id)->get();
+                    $paket = '';
+                    foreach ($get as $val) {
+                        $paket .= '- ' . $val->nama . '<br>';
+                    }
+                    return $paket;
+                })
+                ->rawColumns(['action', 'paket_detail'])
+                ->addIndexColumn()
+                ->make(true);
+        }
+    }
+
+    public function create_paket(Request $request)
+    {
+        hasModule('PAKET');
+        if ($request->ajax()) {
+            // dd($request);
+            $data['nama'] = $request->nama;
+            $data['harga'] = $request->harga;
+            $data['id_paket_detail'] = json_encode($request->id_paket_detail);
+
+
+            $data['created_date'] = date('Y-m-d');
+            $data['created_by'] = auth()->user()->id;
+            // dd(auth()->user()->roles);
+            DB::beginTransaction();
+            try {
+                DB::table('paket')->insert($data);
+
+                // dd('asd');
+                DB::commit();
+                $r['result'] = true;
+            } catch (\Exception $e) {
+                DB::rollback();
+                $r['result'] = false;
+            }
+
+            echo json_encode($r);
+            return;
+        }
+    }
+
+    public function update_paket(Request $request)
+    {
+        hasModule('PAKET');
+        if ($request->ajax()) {
+            $data['nama'] = $request->nama;
+            $data['harga'] = $request->harga;
+
+            $data['edited_date'] = date('Y-m-d');
+            $data['edited_by'] = auth()->user()->id;
+            // dd($data, $request->hidden_id);
+            DB::beginTransaction();
+            try {
+                DB::table('paket')->where('id', $request->hidden_id)->update($data);
+                // dd('asd');
+                DB::commit();
+                $r['result'] = true;
+            } catch (\Exception $e) {
+                DB::rollback();
+                $r['result'] = false;
+            }
+
+            echo json_encode($r);
+            return;
+        }
+    }
+
+    public function delete_paket(Request $request)
+    {
+        hasModule('PAKET');
+        // dd($request->id);
+        $data = DB::table('paket')->where('id', $request->id)->update([
+            'deleted' => 1,
+        ]);
+        if ($data) {
+            $r['title'] = 'Sukses!';
+            $r['icon'] = 'success';
+            $r['status'] = 'Berhasil di Hapus!';
+        } else {
+            $r['title'] = 'Maaf!';
+            $r['icon'] = 'error';
+            $r['status'] = '<br><b>Tidak dapat di Hapus! <br> Silakan hubungi Administrator.</b>';
+        }
+        return response()->json($r);
+    }
+
+    public function paket_detail()
+    {
+        hasModule('PAKET');
+        $data['role'] = 'PAKET';
+        $data['group'] = 'CMS';
+        return view('cms.paket_detail', compact('data'));
+    }
+
+    public function paket_detail_(Request $request)
+    {
+        hasModule('PAKET');
+        if ($request->ajax()) {
+            $data = DB::table('paket_detail');
+            $data->where('deleted', '!=', 1)->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($field) {
+                    $actionBtn = '<div class="d-flex"><a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-warning edit mr-1" data-id="' . $field->id . '" data-nama="' . $field->nama . '" ><i class="fas fa-pen fa-xs"></i></a>
+                    <a href="javascript:void(0);" style="margin-left:5px" class="btn btn-xs waves-effect waves-light btn-outline-danger delete " data-id="' . $field->id . '"><i class="fas fa-trash fa-xs"></i></a>
+                    </div>';
+                    return $actionBtn;
+                })
+
+                ->rawColumns(['action'])
+                ->addIndexColumn()
+                ->make(true);
+        }
+    }
+
+    public function create_paket_detail(Request $request)
+    {
+        hasModule('PAKET');
+        if ($request->ajax()) {
+            $data['nama'] = $request->nama;
+
+
+            $data['created_date'] = date('Y-m-d');
+            $data['created_by'] = auth()->user()->id;
+            // dd(auth()->user()->roles);
+            DB::beginTransaction();
+            try {
+                DB::table('paket_detail')->insert($data);
+                // dd('asd');
+                DB::commit();
+                $r['result'] = true;
+            } catch (\Exception $e) {
+                DB::rollback();
+                $r['result'] = false;
+            }
+
+            echo json_encode($r);
+            return;
+        }
+    }
+
+    public function update_paket_detail(Request $request)
+    {
+        hasModule('PAKET');
+        if ($request->ajax()) {
+            $data['nama'] = $request->nama;
+
+            $data['edited_date'] = date('Y-m-d');
+            $data['edited_by'] = auth()->user()->id;
+            // dd($data, $request->hidden_id);
+            DB::beginTransaction();
+            try {
+                DB::table('paket_detail')->where('id', $request->hidden_id)->update($data);
+                // dd('asd');
+                DB::commit();
+                $r['result'] = true;
+            } catch (\Exception $e) {
+                DB::rollback();
+                $r['result'] = false;
+            }
+
+            echo json_encode($r);
+            return;
+        }
+    }
+
+    public function delete_paket_detail(Request $request)
+    {
+        hasModule('PAKET');
+        // dd($request->id);
+        $data = DB::table('paket_detail')->where('id', $request->id)->update([
+            'deleted' => 1,
+        ]);
+        if ($data) {
+            $r['title'] = 'Sukses!';
+            $r['icon'] = 'success';
+            $r['status'] = 'Berhasil di Hapus!';
+        } else {
+            $r['title'] = 'Maaf!';
+            $r['icon'] = 'error';
+            $r['status'] = '<br><b>Tidak dapat di Hapus! <br> Silakan hubungi Administrator.</b>';
+        }
+        return response()->json($r);
+    }
+
+    public function flow_work()
+    {
+        hasModule('SERVICE');
+        $data['role'] = 'SERVICE';
+        $data['group'] = 'CMS';
+        return view('cms.flow_work', compact('data'));
+    }
+
+    public function flow_work_(Request $request)
+    {
+        hasModule('SERVICE');
+        if ($request->ajax()) {
+            $data = DB::table('flow_work');
+            $data->where('deleted', '!=', 1)->get();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($field) {
+                    $actionBtn = '<div class="d-flex"><a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-warning edit mr-1" data-id="' . $field->id . '" data-nama="' . $field->nama . '" data-deskripsi="' . $field->deskripsi . '"><i class="fas fa-pen fa-xs"></i></a>
+                    <a href="javascript:void(0);" style="margin-left:5px" class="btn btn-xs waves-effect waves-light btn-outline-danger delete " data-id="' . $field->id . '"><i class="fas fa-trash fa-xs"></i></a>
+                    </div>';
+                    return $actionBtn;
+                })
+
+                ->rawColumns(['action'])
+                ->addIndexColumn()
+                ->make(true);
+        }
+    }
+
+    public function create_flow_work(Request $request)
+    {
+        hasModule('SERVICE');
+        if ($request->ajax()) {
+            $data['nama'] = $request->nama;
+            $data['deskripsi'] = $request->deskripsi;
+
+
+            $data['created_date'] = date('Y-m-d');
+            $data['created_by'] = auth()->user()->id;
+            // dd(auth()->user()->roles);
+            DB::beginTransaction();
+            try {
+                DB::table('flow_work')->insert($data);
+                // dd('asd');
+                DB::commit();
+                $r['result'] = true;
+            } catch (\Exception $e) {
+                DB::rollback();
+                $r['result'] = false;
+            }
+
+            echo json_encode($r);
+            return;
+        }
+    }
+
+    public function update_flow_work(Request $request)
+    {
+        hasModule('SERVICE');
+        if ($request->ajax()) {
+            $data['nama'] = $request->nama;
+            $data['deskripsi'] = $request->deskripsi;
+
+            $data['edited_date'] = date('Y-m-d');
+            $data['edited_by'] = auth()->user()->id;
+            // dd($data, $request->hidden_id);
+            DB::beginTransaction();
+            try {
+                DB::table('flow_work')->where('id', $request->hidden_id)->update($data);
+                // dd('asd');
+                DB::commit();
+                $r['result'] = true;
+            } catch (\Exception $e) {
+                DB::rollback();
+                $r['result'] = false;
+            }
+
+            echo json_encode($r);
+            return;
+        }
+    }
+
+    public function delete_flow_work(Request $request)
+    {
+        hasModule('SERVICE');
+        // dd($request->id);
+        $data = DB::table('flow_work')->where('id', $request->id)->update([
             'deleted' => 1,
         ]);
         if ($data) {

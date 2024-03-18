@@ -16,20 +16,201 @@
   </section><!-- End Hero -->
 
   <main id="main">
-<!-- ======= What We Do Section ======= -->
+     <!-- ======= About Section ======= -->
+    <section id="about" class="about mb-5">
+      <div class="container">
+
+        <div class="row">
+          <div class="col-lg-6">
+            <img src="{{asset('assets_front/img/about.jpg')}}" class="img-fluid" alt="">
+          </div>
+          <div class="col-lg-6 pt-4 pt-lg-0">
+            <h3>Tentang Kami</h3>
+            <p align="justify"> 
+               <?php
+                  $num_char = 800;
+                  $text = strip_tags($data['profile']->tentang_kami);
+                  echo substr($text, 0, $num_char) . '...';
+                ?>
+            </p>
+            <a href="/about" class="btn btn-primary" style="margin-top: 55px" style="width:200px">Lihat Selengkapnya</a>
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End About Section -->
+
+    <!-- ======= Counts Section ======= -->
+    <section id="counts" class="counts">
+      <div class="container">
+
+        <div class="row">
+
+          <div class="col-lg-3 col-6">
+            <div class="count-box">
+              <i class="bi bi-emoji-smile"></i>
+              <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="1" class="purecounter"></span>
+              <p>Happy Clients</p>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-6">
+            <div class="count-box">
+              <i class="bi bi-journal-richtext"></i>
+              <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1" class="purecounter"></span>
+              <p>Projects</p>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-6 mt-5 mt-lg-0">
+            <div class="count-box">
+              <i class="bi bi-headset"></i>
+              <span data-purecounter-start="0" data-purecounter-end="1463" data-purecounter-duration="1" class="purecounter"></span>
+              <p>Hours Of Support</p>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-6 mt-5 mt-lg-0">
+            <div class="count-box">
+              <i class="bi bi-people"></i>
+              <span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="1" class="purecounter"></span>
+              <p>Hard Workers</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Counts Section -->
+
+     <!-- ======= Services Section ======= -->
+    <section id="services" class="services section-bg">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Layanan</h2>
+          {{-- <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem</p> --}}
+        </div>
+
+        <div class="row">
+            @foreach($data['service'] as $val)
+            <?php 
+              $icon = ($val->icon != null) ? asset($val->icon) : asset('/uploads/noimage.jpg');
+            ?>
+            <div class="col-12 col-md-4">
+
+              <div class="card mb-3">
+                <div class="row g-0">
+                  <div class="col-md-4">
+                    <a href="/detail_service/{{\Crypt::encrypt($val->id)}}"><img src="{{$icon}}" class="img-fluid rounded-start" alt="..."></a>
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <h5 class="card-title"><a href="/detail_service/{{\Crypt::encrypt($val->id)}}">{{$val->nama}}</a></h5>
+                      <p class="card-text" align="justify">{{substr($val->deskripsi,0,80)."..."}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            @endforeach
+          
+        </div>
+
+      </div>
+    </section><!-- End Services Section -->
+
+    <!-- ======= Portfolio Section ======= -->
+    <section id="portfolio" class="portfolio">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Portfolio</h2>
+          {{-- <p>Sit sint consectetur velit quisquam cupiditate impedit suscipit</p> --}}
+        </div>
+
+        <div class="row portfolio-container">
+          @foreach($data['portofolio'] as $val)
+          <?php 
+            $foto = ($val->foto != null) ? asset($val->foto) : asset('/uploads/noimage.jpg');
+          ?>
+          <div class="col-lg-3 col-md-4 portfolio-item filter-app wow fadeInUp">
+            <div class="portfolio-wrap">
+              <figure>
+                <img src="{{$foto}}" class="img-fluid" alt="">
+                <a href="{{$foto}}" data-gallery="portfolioGallery" class="link-preview portfolio-lightbox" title="Preview"><i class="bx bx-plus"></i></a>
+                <a href="/detail_portofolio/{{\Crypt::encrypt($val->id)}}" class="link-details" title="More Details"><i class="bx bx-link"></i></a>
+              </figure>
+
+              <div class="portfolio-info">
+                <h4><a href="/detail_portofolio/{{\Crypt::encrypt($val->id)}}">{{$val->nama}}</a></h4>
+                <p>{{$val->kategori}}</p>
+              </div>
+            </div>
+          </div>
+          @endforeach
+
+
+        
+
+        </div>
+        <div class="row justify-content-center">
+            <a href="/list_portofolio" class="btn btn-primary " style="width:200px">Selanjutnya</a>
+        </div>
+
+      </div>
+    </section><!-- End Portfolio Section -->
+
+    <!-- ======= Portfolio Section ======= -->
+    <section id="kegiatan" class="portfolio">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Foto kegiatan</h2>
+          {{-- <p>Sit sint consectetur velit quisquam cupiditate impedit suscipit</p> --}}
+        </div>
+
+        <div class="row portfolio-container">
+          @foreach($data['foto_kegiatan'] as $val)
+          <?php 
+            $foto = ($val->foto != null) ? asset($val->foto) : asset('/uploads/noimage.jpg');
+          ?>
+          <div class="col-lg-3 col-md-4 portfolio-item filter-app wow fadeInUp">
+            <div class="portfolio-wrap">
+              <figure>
+                <img src="{{$foto}}" class="img-fluid" alt="">
+                <a href="{{$foto}}" data-gallery="portfolioGallery" class="link-preview portfolio-lightbox" title="Preview"><i class="bx bx-plus"></i></a>
+              </figure>
+
+              <div class="portfolio-info">
+                <h4>{{$val->nama}}</h4>
+                {{-- <p>{{$val->deskripsi}}</p> --}}
+              </div>
+            </div>
+          </div>
+          @endforeach
+
+
+        
+
+        </div>
+
+      </div>
+    </section><!-- End Portfolio Section -->
+
+    <!-- ======= What We Do Section ======= -->
     <section id="what-we-do" class="what-we-do">
       <div class="container">
 
         <div class="section-title">
           <h2>Mitra</h2>
-          <p>Yang pernah Bekerjasama dengan Sektor Kreatif</p>
         </div>
 
         <div class="row gy-5 gy-md-6">
             
             @foreach($data['mitra'] as $val)
             
-            <div class="col-6 col-md-3 align-self-center text-center">
+            <div class="col-6 col-md-2 align-self-center text-center">
                 <img src="{{asset($val->logo)}}" alt="logo" style="width:125px;hight:65px">
             </div>
             @endforeach
@@ -39,40 +220,50 @@
       </div>
     </section><!-- End What We Do Section -->
 
-    <!-- ======= About Section ======= -->
-    <section id="about" class="about mb-5">
+    <section>
       <div class="container">
-
-        <div class="row">
-          <div class="col-lg-6">
-            <img src="{{asset('assets_front/img/about.jpg')}}" class="img-fluid" alt="">
-          </div>
-          <div class="col-lg-6 pt-4 pt-lg-0">
-            <h3>About Us</h3>
-            <p>
-                {!!$data['profile']->tentang_kami!!}
-            </p>
-            {{-- <ul>
-              <li><i class="bx bx-check-double"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
-              <li><i class="bx bx-check-double"></i> Duis aute irure dolor in reprehenderit in voluptate velit.</li>
-            </ul> --}}
-            {{-- <div class="row icon-boxes">
-              <div class="col-md-6">
-                <i class="bx bx-receipt"></i>
-                <h4>Corporis voluptates sit</h4>
-                <p>Consequuntur sunt aut quasi enim aliquam quae harum pariatur laboris nisi ut aliquip</p>
-              </div>
-              <div class="col-md-6 mt-4 mt-md-0">
-                <i class="bx bx-cube-alt"></i>
-                <h4>Ullamco laboris nisi</h4>
-                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt</p>
-              </div>
-            </div> --}}
-          </div>
+        <div class="section-title">
+          <h2>Kenapa Harus Kami</h2>
         </div>
+        <div class="accordion" id="accordionPanelsStayOpenExample">
+          @foreach($data['kenapa_harus_kami'] as $val)
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="panelsStayOpen-heading{{$val->id}}">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse{{$val->id}}" aria-expanded="false" aria-controls="panelsStayOpen-collapse{{$val->id}}">
+                {{$val->judul}}
+              </button>
+            </h2>
+            <div id="panelsStayOpen-collapse{{$val->id}}" class="accordion-collapse collapse " aria-labelledby="panelsStayOpen-heading{{$val->id}}">
+              <div class="accordion-body">
+                <p>{{$val->deskripsi}}</p>
+              </div>
+            </div>
+          </div>
+          @endforeach
+          
+        </div>
+        {{-- <ul class="timeline">
+        
+        @foreach($data['kenapa_harus_kami'] as $val)
+        <li class="timeline-inverted">
+          <div class="timeline-badge warning"><i class="glyphicon glyphicon-credit-card"></i></div>
+          <div class="timeline-panel">
+            <div class="timeline-heading">
+              <h4 class="timeline-title">{{$val->judul}}</h4>
+            </div>
+            <div class="timeline-body">
+              <p>{{$val->deskripsi}}</p>
+            </div>
+          </div>
+        </li>
+        @endforeach
 
-      </div>
-    </section><!-- End About Section -->
+
+
+    </ul> --}}
+    </section>
+
+   
 
     <!-- ======= Skills Section ======= -->
     {{-- <section id="skills" class="skills">
@@ -135,134 +326,14 @@
       </div>
     </section><!-- End Skills Section --> --}}
 
-    <!-- ======= Counts Section ======= -->
-    <section id="counts" class="counts">
-      <div class="container">
-
-        <div class="row">
-
-          <div class="col-lg-3 col-6">
-            <div class="count-box">
-              <i class="bi bi-emoji-smile"></i>
-              <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Happy Clients</p>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-6">
-            <div class="count-box">
-              <i class="bi bi-journal-richtext"></i>
-              <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Projects</p>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-6 mt-5 mt-lg-0">
-            <div class="count-box">
-              <i class="bi bi-headset"></i>
-              <span data-purecounter-start="0" data-purecounter-end="1463" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Hours Of Support</p>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-6 mt-5 mt-lg-0">
-            <div class="count-box">
-              <i class="bi bi-people"></i>
-              <span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Hard Workers</p>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </section><!-- End Counts Section -->
-
-    <!-- ======= Services Section ======= -->
-    <section id="services" class="services section-bg">
-      <div class="container">
-
-        <div class="section-title">
-          <h2>Services</h2>
-          <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem</p>
-        </div>
-
-        <div class="row">
-             @foreach($data['service'] as $val)
-            <?php 
-            $icon = ($val->icon != null) ? asset($val->icon) : asset('/uploads/noimage.jpg');
-          ?>
-          <div class="col-md-6 mt-4">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-2">
-                            <img src="{{$icon}}" alt="icon" class="img-fluid">
-                        </div>
-                        <div class="col-10">
-        
-                            <h4>{{$val->nama}}</h4>
-                            <p>{{$val->deskripsi}}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-          </div>
-            @endforeach
-          
-        </div>
-
-      </div>
-    </section><!-- End Services Section -->
-
-    <!-- ======= Portfolio Section ======= -->
-    <section id="portfolio" class="portfolio">
-      <div class="container">
-
-        <div class="section-title">
-          <h2>Portfolio</h2>
-          <p>Sit sint consectetur velit quisquam cupiditate impedit suscipit</p>
-        </div>
-
-        <div class="row portfolio-container">
-          @foreach($data['portofolio'] as $val)
-          <?php 
-            $foto = ($val->foto != null) ? asset($val->foto) : asset('/uploads/noimage.jpg');
-          ?>
-          <div class="col-lg-3 col-md-4 portfolio-item filter-app wow fadeInUp">
-            <div class="portfolio-wrap">
-              <figure>
-                <img src="{{$foto}}" class="img-fluid" alt="">
-                <a href="{{$foto}}" data-gallery="portfolioGallery" class="link-preview portfolio-lightbox" title="Preview"><i class="bx bx-plus"></i></a>
-                <a href="/detail_portofolio/{{\Crypt::encrypt($val->id)}}" class="link-details" title="More Details"><i class="bx bx-link"></i></a>
-              </figure>
-
-              <div class="portfolio-info">
-                <h4><a href="/detail_portofolio/{{\Crypt::encrypt($val->id)}}">{{$val->nama}}</a></h4>
-                <p>{{$val->kategori}}</p>
-              </div>
-            </div>
-          </div>
-          @endforeach
-
-
-        
-
-        </div>
-        <div class="row justify-content-center">
-            <a href="/list_portofolio" class="btn btn-primary " style="width:200px">Selanjutnya</a>
-        </div>
-
-      </div>
-    </section><!-- End Portfolio Section -->
 
     <!-- ======= Testimonials Section ======= -->
     <section id="testimonials" class="testimonials section-bg">
       <div class="container">
 
         <div class="section-title">
-          <h2>Testimonials</h2>
-          <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem</p>
+          <h2>Ulasan Client</h2>
+          {{-- <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem</p> --}}
         </div>
 
         <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
@@ -292,49 +363,43 @@
       </div>
     </section><!-- End Testimonials Section -->
 
-    <!-- ======= Team Section ======= -->
-    <section id="team" class="team">
+    <section id="paket_promo" class="paket_promo section-bg">
       <div class="container">
 
         <div class="section-title">
-          <h2>Team</h2>
-          <p>Sit sint consectetur velit quos quisquam cupiditate nemo qui</p>
+          <h2>Paket Promo</h2>
+          {{-- <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem</p> --}}
         </div>
-
         <div class="row">
-          @foreach($data['team'] as $team)
-          <?php 
-            $foto = ($team->foto != null) ? $team->foto : '/uploads/noimage.jpg';
-          ?>
-          <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
-            <div class="member">
-              <img src="{{asset($foto)}}" alt="">
-              <h4>{{$team->nama}}</h4>
-              <span>{{$team->jabatan}}</span>
-               
-              <div class="social">
-                <a href="{{$team->fb}}"><i class="bi bi-facebook"></i></a>
-                <a href="{{$team->ig}}"><i class="bi bi-instagram"></i></a>
-                <a href="{{$team->linkedin}}"><i class="bi bi-linkedin"></i></a>
+          @foreach($data['paket'] as $val)
+            <div class="col-12 col-md-4">
+              <div class="card border-primary mb-3 text-center">
+                <div class="card-header bg-transparent border-primary"><h3>{{$val->nama}}</h3></div>
+                <div class="card-body">
+                  <h3 class="card-title mb-5 mt-2">Rp. {{number_format($val->harga,0,',')}}</h3>
+                  <?php 
+                    $x = \DB::table('paket_detail')->whereIn('id', json_decode($val->id_paket_detail))->get();
+                  ?>
+                  @foreach($x as $c)
+                  <p class="card-text">{{$c->nama}}</p>
+                  @endforeach
+                </div>
+                <div class="card-footer bg-transparent border-primary"><a href="/list_portofolio" class="btn btn-primary mt-2 mb-2" style="width:200px">Start Project</a></div>
               </div>
             </div>
-          </div>
           @endforeach
-
-       
-
         </div>
-
       </div>
-    </section><!-- End Team Section -->
+    </section>
+
 
     <!-- ======= Contact Section ======= -->
     <section id="contact" class="contact section-bg">
       <div class="container">
 
         <div class="section-title">
-          <h2>Contact</h2>
-          <p>Magnam dolores commodi suscipit eius consequatur ex aliquid fuga</p>
+          <h2>Kontak Kami</h2>
+          {{-- <p>Magnam dolores commodi suscipit eius consequatur ex aliquid fuga</p> --}}
         </div>
 
         <div class="row mt-5 justify-content-center">
@@ -345,7 +410,7 @@
               <div class="row">
                 <div class="col-lg-4 info">
                   <i class="bi bi-geo-alt"></i>
-                  <h4>Location:</h4>
+                  <h4>Alamat:</h4>
                   <p>{{$data['profile']->alamat}}</p>
                 </div>
 
@@ -357,7 +422,7 @@
 
                 <div class="col-lg-4 info mt-4 mt-lg-0">
                   <i class="bi bi-phone"></i>
-                  <h4>Call:</h4>
+                  <h4>Nomor WhatsApp :</h4>
                   <p>{{$data['profile']->no_hp}}<br>{{$data['profile']->wa}}</p>
                 </div>
               </div>

@@ -11,10 +11,10 @@
       <div class="container">
 
         <div class="d-flex justify-content-between align-items-center">
-          <h2>Portfolio Details</h2>
+          <h2>Portofolio Details</h2>
           <ol>
-            <li><a href="index.html">Home</a></li>
-            <li>Portfolio Details</li>
+            <li><a href="/">Home</a></li>
+            <li>Portofolio Details</li>
           </ol>
         </div>
 

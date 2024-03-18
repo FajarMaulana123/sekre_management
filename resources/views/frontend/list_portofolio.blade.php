@@ -10,7 +10,7 @@
             <span class="wrap text-white"></span>
         </a> --}}
       </h1>
-      <h2>Sit sint consectetur velit quisquam cupiditate impedit suscipit</h2>
+      {{-- <h2>Sit sint consectetur velit quisquam cupiditate impedit suscipit</h2> --}}
       {{-- <a href="#about" class="btn-get-started scrollto">Start Project</a> --}}
     </div>
   </section><!-- End Hero -->

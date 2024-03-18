@@ -23,8 +23,11 @@ Route::post('proses_login', [LoginController::class, 'proses_login'])->name('pro
 Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::get('/', [HomeController::class, 'home']);
+// Route::get('/test', [HomeController::class, 'RecursiveRandomNumberGenerator']);
 Route::get('/list_portofolio', [HomeController::class, 'portofolio']);
 Route::get('/detail_portofolio/{id}', [HomeController::class, 'detail_portofolio']);
+Route::get('/detail_service/{id}', [HomeController::class, 'detail_service']);
+Route::get('/about', [HomeController::class, 'about']);
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/adm', [AdminController::class, 'index'])->middleware('cek_login');
@@ -98,4 +101,34 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/adm/create_service', [ContentController::class, 'create_service'])->middleware('cek_login');
     Route::post('/adm/update_service', [ContentController::class, 'update_service'])->middleware('cek_login');
     Route::post('/adm/delete_service', [ContentController::class, 'delete_service'])->middleware('cek_login');
+
+    Route::get('/adm/foto_kegiatan', [ContentController::class, 'foto_kegiatan'])->middleware('cek_login');
+    Route::post('/adm/foto_kegiatan_', [ContentController::class, 'foto_kegiatan_'])->middleware('cek_login');
+    Route::post('/adm/create_foto_kegiatan', [ContentController::class, 'create_foto_kegiatan'])->middleware('cek_login');
+    Route::post('/adm/update_foto_kegiatan', [ContentController::class, 'update_foto_kegiatan'])->middleware('cek_login');
+    Route::post('/adm/delete_foto_kegiatan', [ContentController::class, 'delete_foto_kegiatan'])->middleware('cek_login');
+
+    Route::get('/adm/kenapa_harus_kami', [ContentController::class, 'kenapa_harus_kami'])->middleware('cek_login');
+    Route::post('/adm/kenapa_harus_kami_', [ContentController::class, 'kenapa_harus_kami_'])->middleware('cek_login');
+    Route::post('/adm/create_kenapa_harus_kami', [ContentController::class, 'create_kenapa_harus_kami'])->middleware('cek_login');
+    Route::post('/adm/update_kenapa_harus_kami', [ContentController::class, 'update_kenapa_harus_kami'])->middleware('cek_login');
+    Route::post('/adm/delete_kenapa_harus_kami', [ContentController::class, 'delete_kenapa_harus_kami'])->middleware('cek_login');
+
+    Route::get('/adm/paket', [ContentController::class, 'paket'])->middleware('cek_login');
+    Route::post('/adm/paket_', [ContentController::class, 'paket_'])->middleware('cek_login');
+    Route::post('/adm/create_paket', [ContentController::class, 'create_paket'])->middleware('cek_login');
+    Route::post('/adm/update_paket', [ContentController::class, 'update_paket'])->middleware('cek_login');
+    Route::post('/adm/delete_paket', [ContentController::class, 'delete_paket'])->middleware('cek_login');
+
+    Route::get('/adm/paket_detail', [ContentController::class, 'paket_detail'])->middleware('cek_login');
+    Route::post('/adm/paket_detail_', [ContentController::class, 'paket_detail_'])->middleware('cek_login');
+    Route::post('/adm/create_paket_detail', [ContentController::class, 'create_paket_detail'])->middleware('cek_login');
+    Route::post('/adm/update_paket_detail', [ContentController::class, 'update_paket_detail'])->middleware('cek_login');
+    Route::post('/adm/delete_paket_detail', [ContentController::class, 'delete_paket_detail'])->middleware('cek_login');
+
+    Route::get('/adm/flow_work', [ContentController::class, 'flow_work'])->middleware('cek_login');
+    Route::post('/adm/flow_work_', [ContentController::class, 'flow_work_'])->middleware('cek_login');
+    Route::post('/adm/create_flow_work', [ContentController::class, 'create_flow_work'])->middleware('cek_login');
+    Route::post('/adm/update_flow_work', [ContentController::class, 'update_flow_work'])->middleware('cek_login');
+    Route::post('/adm/delete_flow_work', [ContentController::class, 'delete_flow_work'])->middleware('cek_login');
 });
