@@ -5,19 +5,21 @@
 @section('content')
 <section id="hero" class="d-flex flex-column justify-content-center align-items-center">
     <div class="container text-center text-md-left" data-aos="fade-up">
-      <h1>Welcome to <span> Sektor Kreatif</span>
+      <h2>Hello, Welcome to Sektor Kreatif</h2>
+      <h1>Video Production And Digital Product Service
         {{-- <a href="" class="typewrite" data-period="2000" data-type='[ "Sektor Kreatif" ]'>
             <span class="wrap text-white"></span>
         </a> --}}
       </h1>
-      <h2>We are team of talented designers making websites with Bootstrap</h2>
-      <a href="#about" class="btn-get-started scrollto">Start Project</a>
+      <h2>More than 80% of companies use video as part of their marketing strategy,<br> and the overwhelming majority of them reap tangible ROI.</h2>
+      
+      <a href="https://api.whatsapp.com/send?phone={{$data['profile']->wa}}" class="btn-get-started scrollto" target="_blank">Mulai Project</a>
     </div>
   </section><!-- End Hero -->
 
   <main id="main">
      <!-- ======= About Section ======= -->
-    <section id="about" class="about mb-5">
+    <section id="about" class="about mb-5 mt-5">
       <div class="container">
 
         <div class="row">
@@ -25,7 +27,7 @@
             <img src="{{asset('assets_front/img/about.jpg')}}" class="img-fluid" alt="">
           </div>
           <div class="col-lg-6 pt-4 pt-lg-0">
-            <h3>Tentang Kami</h3>
+            <h3>Halo, Kami adalah Sektor Kreatif!</h3>
             <p align="justify"> 
                <?php
                   $num_char = 800;
@@ -48,33 +50,33 @@
 
           <div class="col-lg-3 col-6">
             <div class="count-box">
-              <i class="bi bi-emoji-smile"></i>
-              <span data-purecounter-start="0" data-purecounter-end="232" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Happy Clients</p>
+              <i class="bi bi-patch-check"></i>
+              <span>99 %</span>
+              <p>Penyelesaian</p>
             </div>
           </div>
 
           <div class="col-lg-3 col-6">
             <div class="count-box">
-              <i class="bi bi-journal-richtext"></i>
-              <span data-purecounter-start="0" data-purecounter-end="521" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Projects</p>
+              <i class="bi bi-cart-check"></i>
+              <span >267</span>
+              <p>Terjual</p>
             </div>
           </div>
 
           <div class="col-lg-3 col-6 mt-5 mt-lg-0">
             <div class="count-box">
-              <i class="bi bi-headset"></i>
-              <span data-purecounter-start="0" data-purecounter-end="1463" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Hours Of Support</p>
+              <i class="bi bi-repeat"></i>
+              <span>146</span>
+              <p>Repeat Order</p>
             </div>
           </div>
 
           <div class="col-lg-3 col-6 mt-5 mt-lg-0">
             <div class="count-box">
-              <i class="bi bi-people"></i>
-              <span data-purecounter-start="0" data-purecounter-end="15" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Hard Workers</p>
+              <i class="bi bi-chat-square-dots"></i>
+              <span>3 Menit</span>
+              <p>Response</p>
             </div>
           </div>
 
@@ -84,7 +86,7 @@
     </section><!-- End Counts Section -->
 
      <!-- ======= Services Section ======= -->
-    <section id="services" class="services section-bg">
+    <section id="services"  class="portfolio section-bg">
       <div class="container">
 
         <div class="section-title">
@@ -92,30 +94,31 @@
           {{-- <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem</p> --}}
         </div>
 
-        <div class="row">
-            @foreach($data['service'] as $val)
+        <div class="row portfolio-container">
+          @foreach($data['service'] as $val)
             <?php 
               $icon = ($val->icon != null) ? asset($val->icon) : asset('/uploads/noimage.jpg');
             ?>
-            <div class="col-12 col-md-4">
+          <div class="col-lg-3 col-md-4 portfolio-item filter-app wow fadeInUp">
+            <div class="portfolio-wrap">
+              <figure>
+                <img src="{{$icon}}" class="img-fluid" alt="">
+                {{-- <a href="{{$foto}}" data-gallery="portfolioGallery" class="link-preview portfolio-lightbox" title="Preview"><i class="bx bx-plus"></i></a> --}}
+              </figure>
 
-              <div class="card mb-3">
-                <div class="row g-0">
-                  <div class="col-md-4">
-                    <a href="/detail_service/{{\Crypt::encrypt($val->id)}}"><img src="{{$icon}}" class="img-fluid rounded-start" alt="..."></a>
-                  </div>
-                  <div class="col-md-8">
-                    <div class="card-body">
-                      <h5 class="card-title"><a href="/detail_service/{{\Crypt::encrypt($val->id)}}">{{$val->nama}}</a></h5>
-                      <p class="card-text" align="justify">{{substr($val->deskripsi,0,80)."..."}}</p>
-                    </div>
-                  </div>
-                </div>
+              <div class="portfolio-info">
+                <h4><a href="/detail_service/{{\Crypt::encrypt($val->id)}}">{{$val->nama}}</a></h4>
+                {{-- <p>{{$val->deskripsi}}</p> --}}
               </div>
             </div>
-            @endforeach
-          
+          </div>
+          @endforeach
+
+
+        
+
         </div>
+        
 
       </div>
     </section><!-- End Services Section -->
@@ -175,18 +178,8 @@
           <?php 
             $foto = ($val->foto != null) ? asset($val->foto) : asset('/uploads/noimage.jpg');
           ?>
-          <div class="col-lg-3 col-md-4 portfolio-item filter-app wow fadeInUp">
-            <div class="portfolio-wrap">
-              <figure>
-                <img src="{{$foto}}" class="img-fluid" alt="">
-                <a href="{{$foto}}" data-gallery="portfolioGallery" class="link-preview portfolio-lightbox" title="Preview"><i class="bx bx-plus"></i></a>
-              </figure>
-
-              <div class="portfolio-info">
-                <h4>{{$val->nama}}</h4>
-                {{-- <p>{{$val->deskripsi}}</p> --}}
-              </div>
-            </div>
+          <div class="col-lg-3 col-md-4 ">
+            <img src="{{$foto}}" class="img-thumbnail" alt="{{$val->nama}}">
           </div>
           @endforeach
 
@@ -363,12 +356,11 @@
       </div>
     </section><!-- End Testimonials Section -->
 
-    <section id="paket_promo" class="paket_promo section-bg">
+    {{-- <section id="paket_promo" class="paket_promo section-bg">
       <div class="container">
 
         <div class="section-title">
           <h2>Paket Promo</h2>
-          {{-- <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem</p> --}}
         </div>
         <div class="row">
           @foreach($data['paket'] as $val)
@@ -390,7 +382,7 @@
           @endforeach
         </div>
       </div>
-    </section>
+    </section> --}}
 
 
     <!-- ======= Contact Section ======= -->
