@@ -133,7 +133,7 @@
 
         
 
-        $("#logo").change(function () {
+        $("#foto").change(function () {
             const file = this.files[0];
             if (file) {
                 let reader = new FileReader();

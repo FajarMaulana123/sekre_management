@@ -174,6 +174,7 @@
                         $('#btn-sb').text('Tambah');
                         $('.judul-modal').text('Tambah Service');
                         $('#hidden_status').val('add');
+                        $("#imgPreview").attr("src", "#");
                         $('#id_flow_work').val([]).trigger('change');
                     }
                 },

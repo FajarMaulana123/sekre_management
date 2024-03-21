@@ -435,8 +435,12 @@ class ContentController extends Controller
                     </div>';
                     return $actionBtn;
                 })
-
-                ->rawColumns(['action'])
+                ->addColumn('foto', function ($field) {
+                    $data = asset($field->foto);
+                    $icon = '<img src="' . $data . '" alt="icon" style="width:50px;hight:50px" />';
+                    return $icon;
+                })
+                ->rawColumns(['action', 'foto'])
                 ->addIndexColumn()
                 ->make(true);
         }
@@ -802,13 +806,17 @@ class ContentController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($field) {
-                    $actionBtn = '<div class="d-flex"><a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-warning edit mr-1" data-id="' . $field->id . '" data-judul="' . $field->judul . '" data-deskripsi="' . $field->deskripsi . '" ><i class="fas fa-pen fa-xs"></i></a>
+                    $actionBtn = '<div class="d-flex"><a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-warning edit mr-1" data-id="' . $field->id . '" data-judul="' . $field->judul . '" data-deskripsi="' . $field->deskripsi . '" data-icon="' . asset($field->icon) . '"><i class="fas fa-pen fa-xs"></i></a>
                     <a href="javascript:void(0);" style="margin-left:5px" class="btn btn-xs waves-effect waves-light btn-outline-danger delete " data-id="' . $field->id . '"><i class="fas fa-trash fa-xs"></i></a>
                     </div>';
                     return $actionBtn;
                 })
-
-                ->rawColumns(['action'])
+                ->addColumn('icon', function ($field) {
+                    $data = asset($field->icon);
+                    $icon = '<img src="' . $data . '" alt="icon" style="width:50px;hight:50px" />';
+                    return $icon;
+                })
+                ->rawColumns(['action', 'icon'])
                 ->addIndexColumn()
                 ->make(true);
         }
@@ -820,7 +828,13 @@ class ContentController extends Controller
         if ($request->ajax()) {
             $data['judul'] = $request->judul;
             $data['deskripsi'] = $request->deskripsi;
-
+            if ($request->file('icon')) {
+                $file = $request->file('icon');
+                $fileName = time() . rand(1, 99) . '_' . $file->getClientOriginalName();
+                $file->move('uploads/icon', $fileName);
+                $file_path = 'uploads/icon/' . $fileName;
+                $data['icon'] = $file_path;
+            }
 
             $data['created_date'] = date('Y-m-d');
             $data['created_by'] = auth()->user()->id;
@@ -847,6 +861,14 @@ class ContentController extends Controller
         if ($request->ajax()) {
             $data['judul'] = $request->judul;
             $data['deskripsi'] = $request->deskripsi;
+
+            if ($request->file('icon')) {
+                $file = $request->file('icon');
+                $fileName = time() . rand(1, 99) . '_' . $file->getClientOriginalName();
+                $file->move('uploads/icon', $fileName);
+                $file_path = 'uploads/icon/' . $fileName;
+                $data['icon'] = $file_path;
+            }
 
             $data['edited_date'] = date('Y-m-d');
             $data['edited_by'] = auth()->user()->id;

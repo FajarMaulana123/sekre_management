@@ -21,6 +21,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
+                            <th>icon</th>
                             <th>Judul</th>
                             <th>Deskripsi</th>
                             <th>Action</th>
@@ -67,6 +68,17 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="row">
+                                            <div class="form-group mb-2">
+                                                <label>Upload Icon</label>
+                                                <input type="file" name="icon" id="icon"  accept="image/*" class="form-control form-control-sm">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <img id="imgPreview" src="#" alt="logo" style="width:-webkit-fill-available" />
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -97,7 +109,17 @@
             }
         });
 
-        
+         $("#icon").change(function () {
+            const file = this.files[0];
+            if (file) {
+                let reader = new FileReader();
+                reader.onload = function (event) {
+                    $("#imgPreview")
+                        .attr("src", event.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
 
         var table = $('#table').DataTable({
             dom: '<"dataTables_wrapper dt-bootstrap"<"row"<"col-xl-7 d-block d-sm-flex d-xl-block justify-content-center"<"d-block d-lg-inline-flex me-0 me-md-3"l><"d-block d-lg-inline-flex"B>><"col-xl-5 d-flex d-xl-block justify-content-center"fr>>t<"row"<"col-md-5"i><"col-md-7"p>>>',
@@ -119,6 +141,7 @@
            ],
             columns: [
                 { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+                {data: 'icon', name: 'icon'},
                 {data: 'judul', name: 'judul'},
                 {data: 'deskripsi', name: 'deskripsi'},
                 {
@@ -137,6 +160,7 @@
                         $('#btn-sb').text('Tambah');
                         $('.judul-modal').text('Tambah Kenapa Harus Kami');
                         $('#hidden_status').val('add');
+                        $("#imgPreview").attr("src", "#");
                     }
                 },
                
@@ -166,6 +190,8 @@
             $('#hidden_id').val($(this).data('id'));
             $('#judul').val($(this).data('judul'));
             $('#deskripsi').val($(this).data('deskripsi'));
+            var image_ = $(this).data('icon');
+            $("#imgPreview").attr("src", image_);
         });
 
        
