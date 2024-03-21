@@ -66,7 +66,7 @@
 
     <div class="container text-center">
 
-        <a href="#" class="btn btn-primary center" style="width:200px">Start Project</a>
+        <a href="https://api.whatsapp.com/send?phone={{$data['profile']->wa}}" class="btn btn-primary center" target="_blank" style="width:200px">Mulai Project</a>
     </div>
 
   </main><!-- End #main -->

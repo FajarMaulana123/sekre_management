@@ -97,6 +97,7 @@ class HomeController extends Controller
     public function detail_service($id)
     {
         $id_ = Crypt::decrypt($id);
+        $data['profile'] = getProfile();
         $data['service'] = DB::table('service')->where('deleted', '!=', 1)->where('id', $id_)->first();
         // dd($data);
         $data['flow_work'] = DB::table('flow_work')->where('deleted', '!=', 1)->whereIn('id', json_decode($data['service']->id_flow_work))->get();
