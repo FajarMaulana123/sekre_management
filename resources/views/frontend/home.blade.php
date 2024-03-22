@@ -102,7 +102,7 @@
           <div class="col-lg-3 col-md-4 portfolio-item filter-app wow fadeInUp">
             <div class="portfolio-wrap">
               <figure>
-                <img src="{{$icon}}" class="img-fluid" alt="">
+                <img src="{{$icon}}" class="img-porTo" alt="">
                 {{-- <a href="{{$foto}}" data-gallery="portfolioGallery" class="link-preview portfolio-lightbox" title="Preview"><i class="bx bx-plus"></i></a> --}}
               </figure>
 
@@ -140,7 +140,7 @@
           <div class="col-lg-3 col-md-4 portfolio-item filter-app wow fadeInUp">
             <div class="portfolio-wrap">
               <figure>
-                <img src="{{$foto}}" class="img-fluid" alt="">
+                <img src="{{$foto}}" class="img-porto" alt="">
                 <a href="{{$foto}}" data-gallery="portfolioGallery" class="link-preview portfolio-lightbox" title="Preview"><i class="bx bx-plus"></i></a>
                 <a href="/detail_portofolio/{{\Crypt::encrypt($val->id)}}" class="link-details" title="More Details"><i class="bx bx-link"></i></a>
               </figure>
@@ -213,12 +213,12 @@
       </div>
     </section><!-- End What We Do Section -->
 
-    <section>
-      <div class="container">
+    <section >
+      <div class="container overflow-hidden">
         <div class="section-title">
           <h2>Kenapa Harus Kami</h2>
         </div>
-        <div class="accordion" id="accordionPanelsStayOpenExample">
+        <!-- <div class="accordion" id="accordionPanelsStayOpenExample">
           @foreach($data['kenapa_harus_kami'] as $val)
           <div class="accordion-item">
             <h2 class="accordion-header" id="panelsStayOpen-heading{{$val->id}}">
@@ -232,28 +232,20 @@
               </div>
             </div>
           </div>
-          @endforeach
-          
-        </div>
-        {{-- <ul class="timeline">
-        
-        @foreach($data['kenapa_harus_kami'] as $val)
-        <li class="timeline-inverted">
-          <div class="timeline-badge warning"><i class="glyphicon glyphicon-credit-card"></i></div>
-          <div class="timeline-panel">
-            <div class="timeline-heading">
-              <h4 class="timeline-title">{{$val->judul}}</h4>
-            </div>
-            <div class="timeline-body">
-              <p>{{$val->deskripsi}}</p>
+          @endforeach -->
+          <div class="row gy-5">
+          @foreach($data['kenapa_harus_kami'] as $val)
+          <div class="col-12 col-sm-6 col-lg-4 ">
+            <div class="text-center px-xl-2">
+              <img src="{{ asset('assets_front/img/sk.png')}}" alt="logo" style="width:70px;hight:65px;margin-bottom:10px;">
+              <h5 class="m-2">{{$val->judul}}</h5>
+              <p class="m-0 text-secondary">Vestibulum bibendum, lorem a blandit lacinia, nisi velit posuere nisl, vel placerat magna mauris mollis maximus est.</p>
             </div>
           </div>
-        </li>
-        @endforeach
-
-
-
-    </ul> --}}
+          @endforeach
+        </div>
+      </div>
+       
     </section>
 
    
