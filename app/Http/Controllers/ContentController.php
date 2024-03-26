@@ -554,7 +554,7 @@ class ContentController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($field) {
-                    $actionBtn = '<div class="d-flex"><a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-warning edit mr-1" data-id="' . $field->id . '" data-id_flow_work=' . $field->id_flow_work . '" data-nama=' . $field->nama . '"  data-deskripsi="' . $field->deskripsi . '" data-icon="' . asset($field->icon) . '" ><i class="fas fa-pen fa-xs"></i></a>
+                    $actionBtn = '<div class="d-flex"><a href="javascript:void(0);" class="btn btn-xs waves-effect waves-light btn-outline-warning edit mr-1" data-id="' . $field->id . '" data-id_flow_work=' . $field->id_flow_work . ' data-nama=' . $field->nama . '"  data-deskripsi="' . $field->deskripsi . '" data-icon="' . asset($field->icon) . '" ><i class="fas fa-pen fa-xs"></i></a>
                     <a href="javascript:void(0);" style="margin-left:5px" class="btn btn-xs waves-effect waves-light btn-outline-danger delete " data-id="' . $field->id . '"><i class="fas fa-trash fa-xs"></i></a>
                     </div>';
                     return $actionBtn;
@@ -585,7 +585,7 @@ class ContentController extends Controller
         if ($request->ajax()) {
             $data['nama'] = $request->nama;
             $data['deskripsi'] = $request->deskripsi;
-            $data['id_flow_work'] = json_encode($request->id_flow_work);
+            $data['id_flow_work'] = ($request->id_flow_work != null) ? json_encode($request->id_flow_work) : "[]";
 
             if ($request->file('icon')) {
                 $file = $request->file('icon');
@@ -620,7 +620,7 @@ class ContentController extends Controller
         if ($request->ajax()) {
             $data['nama'] = $request->nama;
             $data['deskripsi'] = $request->deskripsi;
-            $data['id_flow_work'] = json_encode($request->id_flow_work);
+            $data['id_flow_work'] = ($request->id_flow_work != null) ? json_encode($request->id_flow_work) : "[]";
 
             if ($request->file('icon')) {
                 $file = $request->file('icon');
