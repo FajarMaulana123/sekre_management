@@ -86,7 +86,7 @@
     </section><!-- End Counts Section -->
 
      <!-- ======= Services Section ======= -->
-    <section id="services"  class="portfolio section-bg">
+    <section id="services"  class="section-bg">
       <div class="container">
 
         <div class="section-title">
@@ -94,29 +94,18 @@
           {{-- <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem</p> --}}
         </div>
 
-        <div class="row portfolio-container">
+        <div class="row gy-5">
           @foreach($data['service'] as $val)
-            <?php 
-              $icon = ($val->icon != null) ? asset($val->icon) : asset('/uploads/noimage.jpg');
-            ?>
-          <div class="col-lg-3 col-md-4 portfolio-item filter-app wow fadeInUp">
-            <div class="portfolio-wrap">
-              <figure>
-                <img src="{{$icon}}" class="img-porTo" alt="">
-                {{-- <a href="{{$foto}}" data-gallery="portfolioGallery" class="link-preview portfolio-lightbox" title="Preview"><i class="bx bx-plus"></i></a> --}}
-              </figure>
-
-              <div class="portfolio-info">
-                <h4><a href="/detail_service/{{\Crypt::encrypt($val->id)}}">{{$val->nama}}</a></h4>
-                {{-- <p>{{$val->deskripsi}}</p> --}}
-              </div>
+          <div class="col-12 col-sm-6 col-lg-4 ">
+            <div class="text-center px-xl-2">
+              <?php 
+                $icon = ($val->icon != null) ? asset($val->icon) : asset('/uploads/noimage.jpg');
+              ?>
+              <img src="{{$icon}}" alt="logo" style="width:100px;hight:100px;margin-bottom:10px;">
+              <h4><a href="/detail_service/{{\Crypt::encrypt($val->id)}}">{{$val->nama}}</a></h4>
             </div>
           </div>
           @endforeach
-
-
-        
-
         </div>
         
 
@@ -176,10 +165,10 @@
         <div class="row portfolio-container">
           @foreach($data['foto_kegiatan'] as $val)
           <?php 
-            $foto = ($val->foto != null) ? asset($val->foto) : asset('/uploads/noimage.jpg');
+            $foto_kg = ($val->foto != null) ? asset($val->foto) : asset('/uploads/noimage.jpg');
           ?>
           <div class="col-lg-3 col-md-4 ">
-            <img src="{{$foto}}" class="img-thumbnail" alt="{{$val->nama}}">
+            <img src="{{$foto_kg}}" class="img-thumbnail" alt="{{$val->nama}}">
           </div>
           @endforeach
 
@@ -218,28 +207,16 @@
         <div class="section-title">
           <h2>Kenapa Harus Kami</h2>
         </div>
-        <!-- <div class="accordion" id="accordionPanelsStayOpenExample">
-          @foreach($data['kenapa_harus_kami'] as $val)
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="panelsStayOpen-heading{{$val->id}}">
-              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse{{$val->id}}" aria-expanded="false" aria-controls="panelsStayOpen-collapse{{$val->id}}">
-                {{$val->judul}}
-              </button>
-            </h2>
-            <div id="panelsStayOpen-collapse{{$val->id}}" class="accordion-collapse collapse " aria-labelledby="panelsStayOpen-heading{{$val->id}}">
-              <div class="accordion-body">
-                <p>{{$val->deskripsi}}</p>
-              </div>
-            </div>
-          </div>
-          @endforeach -->
-          <div class="row gy-5">
+        <div class="row gy-5">
           @foreach($data['kenapa_harus_kami'] as $val)
           <div class="col-12 col-sm-6 col-lg-4 ">
             <div class="text-center px-xl-2">
-              <img src="{{ asset('assets_front/img/sk.png')}}" alt="logo" style="width:70px;hight:65px;margin-bottom:10px;">
+              <?php 
+                $icon = ($val->icon != null) ? asset($val->icon) : asset('assets_front/img/sk.png');
+              ?>
+              <img src="{{$icon}}" alt="logo" style="width:70px;hight:65px;margin-bottom:10px;">
               <h5 class="m-2">{{$val->judul}}</h5>
-              <p class="m-0 text-secondary">Vestibulum bibendum, lorem a blandit lacinia, nisi velit posuere nisl, vel placerat magna mauris mollis maximus est.</p>
+              <p class="m-0 text-secondary">{{$val->deskripsi}}</p>
             </div>
           </div>
           @endforeach

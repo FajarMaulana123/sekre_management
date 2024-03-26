@@ -30,7 +30,7 @@ class ContentController extends Controller
         $data['fax'] = $request->fax;
         $data['email'] = $request->email;
         $data['facebook'] = $request->facebook;
-        $data['twitter'] = $request->twitter;
+        $data['linkedin'] = $request->linkedin;
         $data['ig'] = $request->ig;
         $data['wa'] = $request->wa;
         $data['yt'] = $request->yt;

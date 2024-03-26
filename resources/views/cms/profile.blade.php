@@ -68,8 +68,8 @@
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label>Link Twitter</label>
-                            <input type="text" id="twitter" name="twitter" class="form-control" value="{{($data['data'] == null) ? '' : $data['data']->twitter}}" >
+                            <label>Link LinkedIn</label>
+                            <input type="text" id="linkedin" name="linkedin" class="form-control" value="{{($data['data'] == null) ? '' : $data['data']->linkedin}}" >
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -194,7 +194,7 @@ $(document).ready(function() {
                 ig: {
                     required: true
                 },
-                twitter: {
+                linkedin: {
                     required: true
                 },
                 yt: {

@@ -57,10 +57,8 @@
       </nav><!-- .navbar -->
 
       <div class="header-social-links d-flex align-items-center">
-        <a href="{{$profile->twitter}}" class="twitter"><i class="bi bi-twitter"></i></a>
-        <a href="{{$profile->facebook}}" class="facebook"><i class="bi bi-facebook"></i></a>
         <a href="{{$profile->ig}}" class="instagram"><i class="bi bi-instagram"></i></a>
-        {{-- <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></i></a> --}}
+        <a href="{{$profile->linkedin}}" class="linkedin"><i class="bi bi-linkedin"></i></i></a>
       </div>
 
     </div>
@@ -117,9 +115,8 @@
         </div>
       </div>
       <div class="social-links text-center text-md-right pt-3 pt-md-0">
-        <a href="{{$profile->twitter}}" class="twitter"><i class="bi bi-twitter"></i></a>
-        <a href="{{$profile->facebook}}" class="facebook"><i class="bi bi-facebook"></i></a>
         <a href="{{$profile->ig}}" class="instagram"><i class="bi bi-instagram"></i></a>
+        <a href="{{$profile->linkedin}}" class="linkedin"><i class="bi bi-linkedin"></i></i></a>
       </div>
     </div>
   </footer><!-- End Footer -->
