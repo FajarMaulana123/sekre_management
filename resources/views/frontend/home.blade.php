@@ -96,7 +96,7 @@
 
         <div class="row gy-5">
           @foreach($data['service'] as $val)
-          <div class="col-12 col-sm-6 col-lg-4 ">
+          <div class="col-12 col-sm-6 col-lg-3 ">
             <div class="text-center px-xl-2">
               <?php 
                 $icon = ($val->icon != null) ? asset($val->icon) : asset('/uploads/noimage.jpg');
