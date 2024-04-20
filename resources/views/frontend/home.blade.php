@@ -24,7 +24,7 @@
 
         <div class="row">
           <div class="col-lg-6">
-            <img src="{{asset('assets_front/img/about.jpg')}}" class="img-fluid" alt="">
+            <img src="{{asset('assets_front/img/2.jpg')}}" class="img-fluid" alt="">
           </div>
           <div class="col-lg-6 pt-4 pt-lg-0">
             <h3>Halo, Kami adalah Sektor Kreatif!</h3>
@@ -147,7 +147,7 @@
 
         </div>
         <div class="row justify-content-center">
-            <a href="/list_portofolio" class="btn btn-primary " style="width:200px">Selanjutnya</a>
+            <a href="/list_portofolio" class="btn btn-primary " style="width:200px">Selengkapnya</a>
         </div>
 
       </div>

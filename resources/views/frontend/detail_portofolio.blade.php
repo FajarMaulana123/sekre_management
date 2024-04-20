@@ -52,17 +52,8 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <table>
-                        <tr>
-                            <td>Nama Project</td>
-                            <td>:</td>
-                            <td>{{$data['portofolio']->nama}}</td>
-                        </tr>
-                        <tr>
-                            <td>Deskripsi</td>
-                            <td>:</td>
-                        </tr>
-                    </table>
+                    
+                    <h4><b>{{$data['portofolio']->nama}}</b></h4>
                     <p class="mt-2">{{$data['portofolio']->deskripsi}}</p>
                 </div>
             </div>

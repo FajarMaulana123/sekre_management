@@ -38,7 +38,7 @@
           <div class="col-lg-3 col-md-4 portfolio-item filter-{{$val->kategori}} wow fadeInUp">
             <div class="portfolio-wrap">
               <figure>
-                <img src="{{$foto}}" class="img-fluid" alt="">
+                <img src="{{$foto}}" class="img-porto" alt="">
                 <a href="{{$foto}}" data-gallery="portfolioGallery" class="link-preview portfolio-lightbox" title="Preview"><i class="bx bx-plus"></i></a>
                 <a href="/detail_portofolio/{{\Crypt::encrypt($val->id)}}" class="link-details" title="More Details"><i class="bx bx-link"></i></a>
               </figure>

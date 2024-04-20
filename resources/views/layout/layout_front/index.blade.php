@@ -87,8 +87,8 @@
             <h3>Kontak Kami</h3>
             <p>
               <strong>Email:</strong> {{$profile->email}}<br>
-              <strong>WhatsApp:</strong> {{$profile->wa}}<br>
-              <strong>Phone:</strong> {{$profile->no_hp}}<br>
+              <strong>WhatsApp:</strong> +{{$profile->wa}}<br>
+              {{-- <strong>Phone:</strong> {{$profile->no_hp}}<br> --}}
             </p>
           </div>
 

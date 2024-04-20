@@ -64,7 +64,7 @@ class HomeController extends Controller
         // $data['kategori'] = DB::table('kategori_porto')->get();
         $data['kenapa_harus_kami'] = DB::table('kenapa_harus_kami')->where('deleted', '!=', 1)->get();
         $data['paket'] = DB::table('paket')->where('deleted', '!=', 1)->get();
-        $data['portofolio'] = DB::table('portofolio')->leftJoin('kategori_porto', 'kategori_porto.id', '=', 'portofolio.id_kategori')->select('portofolio.*', 'kategori_porto.nama as kategori')->where('deleted', '!=', 1)->orderBy('portofolio.created_date', 'desc')->take(6)->get();
+        $data['portofolio'] = DB::table('portofolio')->leftJoin('kategori_porto', 'kategori_porto.id', '=', 'portofolio.id_kategori')->select('portofolio.*', 'kategori_porto.nama as kategori')->where('deleted', '!=', 1)->orderBy('portofolio.created_date', 'desc')->take(8)->get();
 
         return view('frontend.home', compact('data'));
     }
@@ -81,7 +81,7 @@ class HomeController extends Controller
     {
 
         $data['kategori'] = DB::table('kategori_porto')->get();
-        $data['portofolio'] = DB::table('portofolio')->leftJoin('kategori_porto', 'kategori_porto.id', '=', 'portofolio.id_kategori')->select('portofolio.*', 'kategori_porto.nama as kategori')->where('deleted', '!=', 1)->orderBy('portofolio.created_date', 'desc')->take(6)->get();
+        $data['portofolio'] = DB::table('portofolio')->leftJoin('kategori_porto', 'kategori_porto.id', '=', 'portofolio.id_kategori')->select('portofolio.*', 'kategori_porto.nama as kategori')->where('deleted', '!=', 1)->orderBy('portofolio.created_date', 'desc')->get();
 
         return view('frontend.list_portofolio', compact('data'));
     }
